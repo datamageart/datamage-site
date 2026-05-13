@@ -1,0 +1,1814 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>:DATA/MAGE | Cyberpunk Visual Systems</title>
+  <meta name="description" content=":DATA/MAGE builds concert visuals, motion graphics, laser programming, stage design, and immersive installations for artists, festivals, museums, and venues." />
+  <link rel="icon" type="image/png" href="assets/logos/DM_Android_logo.png?v=20260511b" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            void: "#050507",
+            ink: "#0b0d12",
+            phosphor: "#c8ff00",
+            magenta: "#ff1bd6",
+            cyan: "#00eaff",
+            violet: "#8f43ff",
+            warning: "#fffb00",
+            signal: "#f4f7ff"
+          },
+          fontFamily: {
+            display: ["Space Grotesk", "Inter", "Arial", "sans-serif"],
+            mono: ["IBM Plex Mono", "Consolas", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root { color-scheme: dark; }
+    :root { --hero-accent: #ff1bd6; --hero-secondary: #00eaff; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body {
+      background:
+        linear-gradient(90deg, rgba(255, 27, 214, .07) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(0, 234, 255, .05) 1px, transparent 1px),
+        radial-gradient(circle at 16% 11%, rgba(0, 234, 255, .20), transparent 28rem),
+        radial-gradient(circle at 82% 0%, rgba(255, 27, 214, .18), transparent 27rem),
+        linear-gradient(180deg, #020203 0%, #07000d 44%, #030306 100%);
+      background-size: 80px 80px, 80px 80px, auto, auto, auto;
+      color: #f7f0df;
+      overflow-x: hidden;
+    }
+    .scanlines::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 60;
+      background: repeating-linear-gradient(180deg, rgba(255,255,255,.04) 0 1px, transparent 1px 4px);
+      mix-blend-mode: overlay;
+      opacity: .24;
+    }
+    .grid-field {
+      background-image:
+        linear-gradient(rgba(140,255,0,.09) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(18,247,255,.08) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: linear-gradient(to bottom, black 0%, transparent 88%);
+    }
+    .glitch {
+      text-shadow: 2px 0 #ff2bd6, -2px 0 #12f7ff;
+    }
+    .neon-panel {
+      box-shadow: 0 0 0 1px rgba(0, 234, 255, .24), 0 0 32px rgba(255, 27, 214, .13);
+    }
+    .cyber-card {
+      clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
+    }
+    .noise {
+      background-image: linear-gradient(135deg, rgba(255,255,255,.08) 0 1px, transparent 1px 8px);
+    }
+    .starfield {
+      position: fixed;
+      inset: 0;
+      z-index: 18;
+      pointer-events: none;
+      opacity: .86;
+    }
+    .hero-orbit {
+      position: relative;
+      width: min(68vw, 620px);
+      aspect-ratio: 1;
+      transform-style: preserve-3d;
+      transition: transform .25s ease-out;
+    }
+    .rutt-field {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      overflow: visible;
+      width: 100%;
+      height: 100%;
+      filter:
+        drop-shadow(0 0 10px color-mix(in srgb, var(--hero-accent) 76%, transparent))
+        drop-shadow(0 0 28px color-mix(in srgb, var(--hero-secondary) 42%, transparent));
+      mix-blend-mode: screen;
+    }
+    .rutt-field path {
+      fill: none;
+      stroke: color-mix(in srgb, var(--hero-accent) 86%, var(--hero-secondary));
+      stroke-linecap: round;
+      stroke-width: .22;
+      vector-effect: non-scaling-stroke;
+    }
+    .mage-core {
+      position: absolute;
+      inset: 4%;
+      display: grid;
+      place-items: center;
+      overflow: visible;
+      cursor: pointer;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      box-shadow: none;
+      transform: rotate(-2deg);
+      z-index: 3;
+    }
+    .mage-core::before {
+      content: "";
+      position: absolute;
+      inset: 11%;
+      border-radius: 50%;
+      border: 1px solid color-mix(in srgb, var(--hero-accent) 28%, transparent);
+      animation: core-spin 13s linear infinite;
+      opacity: .34;
+    }
+    .mage-core::after {
+      content: none;
+    }
+    .mage-core.is-shimmering::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      pointer-events: none;
+      background: url("assets/logos/DM_Android_logo_shimmer_lines.png?v=20260511b") center / 116% 116% no-repeat;
+      filter:
+        brightness(1.45)
+        contrast(1.4)
+        saturate(2)
+        drop-shadow(0 0 18px rgba(255, 27, 214, .78))
+        drop-shadow(0 0 24px rgba(0, 234, 255, .46));
+      mix-blend-mode: screen;
+      -webkit-mask-image: radial-gradient(ellipse 72% 82% at 50% 52%, #000 62%, rgba(0,0,0,.78) 78%, rgba(0,0,0,.22) 92%, transparent 100%);
+      mask-image: radial-gradient(ellipse 72% 82% at 50% 52%, #000 62%, rgba(0,0,0,.78) 78%, rgba(0,0,0,.22) 92%, transparent 100%);
+      animation: logo-line-shimmer .82s ease-out both;
+    }
+    .mage-core img {
+      position: relative;
+      z-index: 3;
+      width: 116%;
+      height: 116%;
+      object-fit: contain;
+      opacity: .92;
+      filter:
+        brightness(.78)
+        contrast(1.72)
+        saturate(1.62)
+        drop-shadow(0 0 18px rgba(255, 27, 214, .36))
+        drop-shadow(0 0 26px rgba(0, 234, 255, .18));
+      mix-blend-mode: screen;
+      clip-path: none;
+      -webkit-mask-image: radial-gradient(ellipse 72% 82% at 50% 52%, #000 62%, rgba(0,0,0,.78) 78%, rgba(0,0,0,.22) 92%, transparent 100%);
+      mask-image: radial-gradient(ellipse 72% 82% at 50% 52%, #000 62%, rgba(0,0,0,.78) 78%, rgba(0,0,0,.22) 92%, transparent 100%);
+      transform: rotate(2deg) scale(1);
+      transition: opacity .2s ease, transform .35s ease, filter .35s ease;
+    }
+    .tesseract-hotspot {
+      position: absolute;
+      z-index: 8;
+      left: 58%;
+      top: -2%;
+      width: 38%;
+      height: 38%;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, .001);
+      cursor: crosshair;
+      outline: none;
+      pointer-events: auto;
+    }
+    .tesseract-hotspot::before {
+      content: "";
+      position: absolute;
+      inset: -4%;
+      border-radius: 50%;
+      opacity: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle, rgba(244, 247, 255, .26), rgba(0, 234, 255, .22) 28%, rgba(255, 27, 214, .15) 54%, transparent 78%);
+      box-shadow:
+        0 0 18px rgba(0, 234, 255, .42),
+        0 0 32px rgba(255, 27, 214, .26),
+        inset 0 0 18px rgba(244, 247, 255, .14);
+      mix-blend-mode: screen;
+      transform: scale(.86);
+      transition: opacity .18s ease, transform .18s ease;
+    }
+    .tesseract-hotspot::after {
+      content: "";
+      position: absolute;
+      inset: 30%;
+      border: 1px solid rgba(0, 234, 255, .74);
+      border-radius: 8px;
+      opacity: 0;
+      pointer-events: none;
+      box-shadow: 0 0 14px rgba(0, 234, 255, .62), 0 0 24px rgba(255, 27, 214, .42);
+      transform: rotate(45deg) scale(.72);
+      transition: opacity .18s ease, transform .18s ease;
+    }
+    .tesseract-hotspot:hover::before,
+    .tesseract-hotspot:focus-visible::before,
+    .mage-core.is-tesseract-ready .tesseract-hotspot::before {
+      opacity: .46;
+      transform: scale(.94);
+    }
+    .tesseract-hotspot:hover::after,
+    .tesseract-hotspot:focus-visible::after,
+    .mage-core.is-tesseract-ready .tesseract-hotspot::after {
+      opacity: .42;
+      transform: rotate(45deg) scale(.9);
+    }
+    .tesseract-hotspot:focus-visible {
+      box-shadow: 0 0 0 1px rgba(0, 234, 255, .7), 0 0 18px rgba(255, 27, 214, .42);
+    }
+    .mage-core.is-tesseract-ready img {
+      filter:
+        brightness(1.08)
+        contrast(2.08)
+        saturate(2.18)
+        hue-rotate(-5deg)
+        drop-shadow(0 0 18px rgba(255, 27, 214, .34))
+        drop-shadow(0 0 28px rgba(0, 234, 255, .28));
+      transform: rotate(2deg) scale(1.025);
+    }
+    .signal-line {
+      position: absolute;
+      z-index: 4;
+      left: 2%;
+      height: 1px;
+      width: 96%;
+      background: linear-gradient(90deg, transparent, rgba(0, 234, 255, .86), rgba(255, 27, 214, .74), rgba(0, 234, 255, .86), transparent);
+      box-shadow:
+        0 0 12px color-mix(in srgb, var(--hero-accent) 64%, transparent),
+        0 0 22px color-mix(in srgb, var(--hero-secondary) 34%, transparent);
+      opacity: .72;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+    .signal-line.one { top: 33%; transform: rotate(-6deg); }
+    .signal-line.two { top: 44%; transform: rotate(-2deg); }
+    .signal-line.three { top: 55%; transform: rotate(2deg); }
+    .signal-line.four { top: 66%; transform: rotate(6deg); }
+    .signal-line.five { top: 50%; width: 116%; left: -8%; transform: rotate(0deg); opacity: .46; }
+    .cursor-glow {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 420px;
+      height: 420px;
+      z-index: 2;
+      pointer-events: none;
+      border-radius: 50%;
+      background: radial-gradient(circle, color-mix(in srgb, var(--hero-accent) 18%, transparent), transparent 64%);
+      transform: translate3d(-50%, -50%, 0);
+      opacity: .65;
+      mix-blend-mode: screen;
+      transition: opacity .2s ease;
+    }
+    .work-card video { filter: saturate(1.12) contrast(1.08); }
+    .work-card:hover video { transform: scale(1.035); filter: saturate(1.35) contrast(1.18); }
+    .proof-trigger {
+      position: relative;
+      z-index: 24;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(0, 234, 255, .56);
+      color: rgb(0, 234, 255);
+      background: rgba(0, 234, 255, .05);
+      padding: .65rem 1rem;
+      font-size: .75rem;
+      text-transform: uppercase;
+      transition: background .18s ease, color .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    .proof-trigger:hover,
+    .proof-trigger:focus-visible {
+      background: rgb(0, 234, 255);
+      border-color: rgb(0, 234, 255);
+      color: rgb(2, 2, 3);
+      box-shadow: 0 0 22px rgba(0, 234, 255, .24);
+      outline: none;
+    }
+    .proof-trigger.magenta {
+      border-color: rgba(255, 27, 214, .56);
+      color: rgb(255, 27, 214);
+      background: rgba(255, 27, 214, .05);
+    }
+    .proof-trigger.magenta:hover,
+    .proof-trigger.magenta:focus-visible {
+      background: rgb(255, 27, 214);
+      border-color: rgb(255, 27, 214);
+      color: rgb(2, 2, 3);
+      box-shadow: 0 0 22px rgba(255, 27, 214, .24);
+    }
+    .proof-trigger.phosphor {
+      border-color: rgba(214, 255, 47, .56);
+      color: rgb(214, 255, 47);
+      background: rgba(214, 255, 47, .05);
+    }
+    .proof-trigger.phosphor:hover,
+    .proof-trigger.phosphor:focus-visible {
+      background: rgb(214, 255, 47);
+      border-color: rgb(214, 255, 47);
+      color: rgb(2, 2, 3);
+      box-shadow: 0 0 22px rgba(214, 255, 47, .2);
+    }
+    .proof-modal {
+      width: min(1120px, calc(100vw - 1.5rem));
+      max-height: min(86vh, 880px);
+      border: 1px solid rgba(0, 234, 255, .34);
+      background:
+        linear-gradient(135deg, rgba(255, 27, 214, .12), rgba(0, 234, 255, .08)),
+        rgba(2, 2, 3, .96);
+      color: rgb(244, 247, 255);
+      padding: 0;
+      overflow: hidden;
+      box-shadow: 0 0 44px rgba(0, 234, 255, .18), 0 0 80px rgba(255, 27, 214, .12);
+    }
+    .proof-modal::backdrop {
+      background: rgba(2, 2, 3, .78);
+      backdrop-filter: blur(8px);
+    }
+    .proof-modal-shell {
+      max-height: min(86vh, 880px);
+      overflow: auto;
+    }
+    .proof-modal-media {
+      background: rgba(0, 0, 0, .42);
+      border: 1px solid rgba(255, 255, 255, .12);
+    }
+    .proof-video-card {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 260px;
+      cursor: pointer;
+      overflow: hidden;
+      border: 0;
+      background: rgba(2, 2, 3, .84);
+      color: rgb(244, 247, 255);
+      text-align: left;
+    }
+    .proof-video-card img {
+      opacity: .82;
+      transition: opacity .18s ease, transform .25s ease;
+    }
+    .proof-video-card:hover img,
+    .proof-video-card:focus-visible img {
+      opacity: 1;
+      transform: scale(1.025);
+    }
+    .proof-play {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at center, rgba(0, 234, 255, .22), transparent 34%),
+        linear-gradient(180deg, transparent, rgba(2, 2, 3, .72));
+    }
+    .proof-play span {
+      display: grid;
+      height: 4.5rem;
+      width: 4.5rem;
+      place-items: center;
+      border: 1px solid rgba(0, 234, 255, .72);
+      border-radius: 50%;
+      background: rgba(2, 2, 3, .62);
+      color: rgb(0, 234, 255);
+      font-size: 1.4rem;
+      box-shadow: 0 0 28px rgba(0, 234, 255, .28), 0 0 46px rgba(255, 27, 214, .14);
+    }
+    .proof-footnote {
+      border-top: 1px solid rgba(255, 255, 255, .10);
+      padding: .85rem 1rem;
+    }
+    .proof-footnote-title {
+      color: rgba(244, 247, 255, .84);
+      font-size: .78rem;
+      line-height: 1.45;
+      text-transform: uppercase;
+    }
+    .proof-footnote-meta {
+      margin-top: .35rem;
+      color: rgba(244, 247, 255, .44);
+      font-size: .68rem;
+      line-height: 1.35;
+      text-transform: uppercase;
+    }
+    .proof-modal-media img,
+    .proof-modal-media video,
+    .proof-modal-media iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 260px;
+      object-fit: cover;
+    }
+    .proof-image-button {
+      display: block;
+      width: 100%;
+      border: 0;
+      background: transparent;
+      cursor: zoom-in;
+      padding: 0;
+      text-align: inherit;
+    }
+    .proof-image-button:focus-visible {
+      outline: 1px solid rgba(0, 234, 255, .72);
+      outline-offset: -1px;
+    }
+    .image-lightbox {
+      width: min(1180px, calc(100vw - 1.5rem));
+      max-height: 92vh;
+      border: 1px solid rgba(0, 234, 255, .44);
+      background: rgba(2, 2, 3, .96);
+      color: rgb(244, 247, 255);
+      padding: 0;
+      overflow: hidden;
+      box-shadow: 0 0 54px rgba(0, 234, 255, .20), 0 0 90px rgba(255, 27, 214, .14);
+    }
+    .image-lightbox::backdrop {
+      background: rgba(2, 2, 3, .82);
+      backdrop-filter: blur(10px);
+    }
+    .image-lightbox img {
+      display: block;
+      width: 100%;
+      max-height: 78vh;
+      object-fit: contain;
+      background: #000;
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 28s linear infinite;
+      will-change: transform;
+    }
+    .marquee-segment {
+      display: flex;
+      flex: 0 0 auto;
+      gap: 2rem;
+      padding-right: 2rem;
+    }
+    .signal-marquee {
+      background:
+        linear-gradient(90deg, rgba(255, 27, 214, .08), rgba(0, 234, 255, .12), rgba(143, 67, 255, .08)),
+        rgba(2, 2, 3, .88);
+      box-shadow:
+        inset 0 1px 0 rgba(0, 234, 255, .34),
+        inset 0 -1px 0 rgba(255, 27, 214, .28),
+        0 0 36px rgba(0, 234, 255, .10);
+    }
+    .signal-marquee::before,
+    .signal-marquee::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .signal-marquee::before {
+      background: repeating-linear-gradient(90deg, transparent 0 18px, rgba(244, 247, 255, .08) 18px 19px);
+      opacity: .34;
+    }
+    .signal-marquee::after {
+      background: linear-gradient(90deg, transparent, rgba(0, 234, 255, .26) 50%, transparent);
+      mix-blend-mode: screen;
+      opacity: .42;
+    }
+    .signal-marquee .marquee-track {
+      color: rgba(244, 247, 255, .86);
+      white-space: nowrap;
+      text-shadow:
+        0 0 12px rgba(0, 234, 255, .42),
+        0 0 18px rgba(255, 27, 214, .28);
+    }
+    .signal-marquee span {
+      border-left: 1px solid rgba(0, 234, 255, .28);
+      padding-left: 1.35rem;
+    }
+    .signal-intake {
+      background:
+        linear-gradient(90deg, rgba(255, 27, 214, .07), rgba(0, 234, 255, .10), rgba(143, 67, 255, .07)),
+        radial-gradient(circle at 18% 18%, rgba(255, 27, 214, .16), transparent 30rem),
+        radial-gradient(circle at 78% 64%, rgba(0, 234, 255, .12), transparent 28rem),
+        rgba(2, 2, 3, .94);
+      box-shadow:
+        inset 0 1px 0 rgba(0, 234, 255, .28),
+        inset 0 -1px 0 rgba(255, 27, 214, .18);
+    }
+    .signal-intake::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        repeating-linear-gradient(90deg, transparent 0 78px, rgba(0, 234, 255, .07) 78px 79px),
+        repeating-linear-gradient(0deg, transparent 0 58px, rgba(255, 27, 214, .045) 58px 59px);
+      opacity: .62;
+    }
+    .signal-intake-panel {
+      border: 1px solid rgba(0, 234, 255, .24);
+      background: linear-gradient(135deg, rgba(0, 234, 255, .08), rgba(255, 27, 214, .055));
+      box-shadow: 0 0 34px rgba(0, 234, 255, .08);
+    }
+    .signal-input {
+      border: 1px solid rgba(0, 234, 255, .28);
+      background: rgba(2, 2, 3, .72);
+      color: rgba(244, 247, 255, .92);
+      outline: none;
+      transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .signal-input::placeholder { color: rgba(244, 247, 255, .38); }
+    .signal-input:focus {
+      border-color: rgba(255, 27, 214, .72);
+      background: rgba(8, 10, 14, .86);
+      box-shadow: 0 0 0 1px rgba(255, 27, 214, .18), 0 0 24px rgba(0, 234, 255, .12);
+    }
+    .intake-status {
+      min-height: 1.25rem;
+      color: rgba(214, 255, 47, .82);
+    }
+    .intake-status.is-error {
+      color: rgba(255, 27, 214, .88);
+    }
+    @keyframes marquee { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
+    @keyframes core-spin { to { transform: rotate(360deg); } }
+    @keyframes logo-line-shimmer {
+      0% { opacity: 0; transform: rotate(2deg) scale(1); filter: brightness(1.1) contrast(1.2) saturate(1.4) drop-shadow(0 0 8px rgba(255, 27, 214, .35)) drop-shadow(0 0 10px rgba(0, 234, 255, .2)); }
+      20% { opacity: .92; }
+      42% { opacity: 1; transform: rotate(2deg) scale(1.018); filter: brightness(1.85) contrast(1.65) saturate(2.35) drop-shadow(0 0 24px rgba(255, 27, 214, .9)) drop-shadow(0 0 34px rgba(0, 234, 255, .6)); }
+      100% { opacity: 0; transform: rotate(2deg) scale(1.006); filter: brightness(1.15) contrast(1.25) saturate(1.45) drop-shadow(0 0 8px rgba(255, 27, 214, .28)) drop-shadow(0 0 10px rgba(0, 234, 255, .18)); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .marquee-track { animation: none; }
+      .work-card:hover video { transform: none; }
+      .hero-orbit { transition: none; }
+    }
+  </style>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</head>
+<body class="scanlines font-mono antialiased">
+  <canvas id="stars" class="starfield"></canvas>
+  <div id="cursor-glow" class="cursor-glow"></div>
+
+  <header class="fixed inset-x-0 top-0 z-30 bg-gradient-to-b from-void/80 to-transparent">
+    <nav class="mx-auto grid max-w-7xl grid-cols-3 items-center px-5 py-5">
+      <div class="hidden items-center gap-7 text-sm font-semibold uppercase text-signal/66 md:flex">
+        <a class="hover:text-cyan" href="#work">Work</a>
+        <a class="hover:text-cyan" href="#systems">Systems</a>
+      </div>
+      <a href="#top" class="justify-self-start font-display text-xl font-bold tracking-normal text-signal md:justify-self-center">:DATA/<span class="text-cyan">MAGE</span></a>
+      <div class="hidden justify-self-end items-center gap-7 text-sm font-semibold uppercase text-signal/66 md:flex">
+        <a class="hover:text-cyan" href="#signal">Signal</a>
+        <a class="hover:text-cyan" href="#intake">Contact</a>
+      </div>
+      <a href="#intake" class="justify-self-end border border-phosphor/70 px-4 py-2 text-xs uppercase text-phosphor transition hover:bg-phosphor hover:text-void md:hidden">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top" class="relative z-10">
+    <section class="relative min-h-screen overflow-hidden">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(143,67,255,.18),transparent_31rem),radial-gradient(circle_at_72%_68%,rgba(0,234,255,.10),transparent_24rem),linear-gradient(180deg,rgba(0,0,0,.58),#020203_95%)]"></div>
+      <svg id="rutt-field" class="rutt-field" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
+      <div class="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-center px-5 pb-14 pt-24 text-center">
+        <div id="hero-orbit" class="hero-orbit mb-4">
+          <div class="signal-line one"></div>
+          <div class="signal-line two"></div>
+          <div class="signal-line three"></div>
+          <div class="signal-line four"></div>
+          <div class="signal-line five"></div>
+          <div class="mage-core">
+            <img id="hero-logo" src="assets/logos/DM_Android_logo.png?v=20260511b" alt="DATA/MAGE android logo" />
+            <button class="tesseract-hotspot" type="button" aria-label="Activate tesseract signal"></button>
+          </div>
+        </div>
+        <h1 class="glitch max-w-4xl font-display text-4xl font-bold leading-[0.95] text-signal sm:text-6xl lg:text-7xl">
+          Visual systems for loud rooms.
+        </h1>
+        <p class="mt-6 max-w-2xl text-sm uppercase leading-7 text-signal/62 md:text-base">
+          Visuals / lights / lasers / projection / immersive media
+        </p>
+        <div class="mt-8 flex flex-wrap justify-center gap-3 text-xs uppercase text-signal/70">
+          <span class="border border-cyan/50 bg-cyan/10 px-3 py-1 text-cyan">Concerts</span>
+          <span class="border border-magenta/50 bg-magenta/10 px-3 py-1 text-magenta">Festivals</span>
+          <span class="border border-violet/50 bg-violet/10 px-3 py-1 text-violet">Museums</span>
+          <span class="border border-phosphor/50 bg-phosphor/10 px-3 py-1 text-phosphor">Venues</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="signal-marquee relative overflow-hidden border-y border-cyan/25">
+      <div class="marquee-track relative z-10 py-3 text-sm font-semibold uppercase" aria-label="DATA/MAGE service loop">
+        <div class="marquee-segment">
+          <span>Concert visual systems</span><span>Live lighting design</span><span>Laser programming</span><span>Projection mapping</span><span>Immersive installations</span><span>Motion content</span>
+          <span>Concert visual systems</span><span>Live lighting design</span><span>Laser programming</span><span>Projection mapping</span><span>Immersive installations</span><span>Motion content</span>
+        </div>
+        <div class="marquee-segment" aria-hidden="true">
+          <span>Concert visual systems</span><span>Live lighting design</span><span>Laser programming</span><span>Projection mapping</span><span>Immersive installations</span><span>Motion content</span>
+          <span>Concert visual systems</span><span>Live lighting design</span><span>Laser programming</span><span>Projection mapping</span><span>Immersive installations</span><span>Motion content</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="work" class="mx-auto max-w-7xl px-5 py-20">
+      <div class="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+        <div>
+          <p class="text-xs uppercase text-cyan">Portfolio archive / live proof</p>
+          <h2 class="mt-3 font-display text-4xl font-bold text-signal md:text-6xl">Operational proof</h2>
+          <button id="cv-open" class="proof-trigger mt-6" type="button">Open CV</button>
+        </div>
+      </div>
+      <div class="grid gap-4 lg:grid-cols-5">
+        <article class="cyber-card neon-panel overflow-hidden bg-white/[.035] lg:col-span-3">
+          <div class="relative aspect-video overflow-hidden bg-ink">
+            <img class="h-full w-full object-cover opacity-85" src="assets/artstation/live-visual-mixes.jpg?v=20260511b" alt="Visual Mixes and Music Videos cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-void via-transparent to-transparent"></div>
+            <span class="absolute left-4 top-4 border border-magenta/60 bg-void/70 px-3 py-1 text-xs uppercase text-magenta">Music video / visuals</span>
+          </div>
+          <div class="p-5">
+            <h3 class="font-display text-3xl text-signal">Visual Mixes / Music Videos</h3>
+            <p class="mt-3 text-sm leading-7 text-signal/66">Analog and digital VFX, studio liaison work, projection, lighting, full animation, artwork, livestream visuals, and live editing.</p>
+            <div class="mt-5 grid gap-3 text-xs text-signal/70 sm:grid-cols-2">
+              <span>Paul Wall - Platinum Playa</span>
+              <span>Paul Wall - Love 4 Rent</span>
+              <span>Paul Wall x Z-Ro - Swang Down</span>
+              <span>Glass Beams - Mirage</span>
+            </div>
+            <button class="proof-trigger mt-6" type="button" data-proof="visual-mixes">Open gallery</button>
+          </div>
+        </article>
+
+        <article class="cyber-card neon-panel overflow-hidden bg-white/[.035] lg:col-span-2">
+          <div class="relative aspect-video overflow-hidden bg-ink">
+            <img id="featured-video-poster" class="h-full w-full object-cover opacity-85" src="assets/artstation/live-visual-mixes.jpg?v=20260511b" alt="Featured video proof" />
+            <div class="absolute inset-0 bg-gradient-to-t from-void via-transparent to-transparent"></div>
+            <span id="featured-video-badge" class="absolute left-4 top-4 border border-phosphor/60 bg-void/70 px-3 py-1 text-xs uppercase text-phosphor">Video proof</span>
+          </div>
+          <div class="p-5">
+            <p class="text-xs uppercase text-phosphor">Featured embed</p>
+            <h3 id="featured-video-title" class="mt-3 font-display text-2xl text-signal">Analog/digital VFX and studio liaison</h3>
+            <p id="featured-video-copy" class="mt-3 text-sm leading-6 text-signal/62">A direct portfolio proof point for music-video production support and mixed-media visual treatment.</p>
+            <button id="featured-video-button" class="proof-trigger phosphor mt-5" type="button" data-proof="featured-video">Watch video</button>
+          </div>
+        </article>
+
+        <article class="cyber-card overflow-hidden border border-white/12 bg-white/[.03] lg:col-span-2">
+          <img class="h-56 w-full object-cover" src="assets/artstation/live-lighting-videos.jpg?v=20260511b" alt="Live Lighting Videos cover" />
+          <div class="p-5">
+            <p class="text-xs uppercase text-cyan">Live lighting videos</p>
+            <h3 class="mt-3 font-display text-2xl text-signal">Ruel, Tobe Nwigwe, RHCP, NGHTMRE, Cashmere Cat</h3>
+            <p class="mt-3 text-sm leading-6 text-signal/62">Lighting design, lighting direction, live visuals, tech work, and festival-scale stage execution.</p>
+            <button class="proof-trigger mt-5" type="button" data-proof="lighting-videos">Open gallery</button>
+          </div>
+        </article>
+        <article class="cyber-card overflow-hidden border border-white/12 bg-white/[.03] lg:col-span-3">
+          <img class="h-56 w-full object-cover" src="assets/artstation/live-show-lighting.jpg?v=20260511b" alt="Live Show Lighting cover" />
+          <div class="p-5">
+            <p class="text-xs uppercase text-magenta">Live show lighting</p>
+            <h3 class="mt-3 font-display text-2xl text-signal">Tour, festival, projection, and laser credits</h3>
+            <p class="mt-3 text-sm leading-6 text-signal/62">Includes Union is Creation immersive sound bath, RHCP Unlimited Love World Tour tech work, Ruel stage design, $uicideboy$ Greyday laser/visual work, La Sopa Houston projection mapping, Lauterhaus projection mapping, Electric Zoo, Jai Wolf, and Cashmere Cat festival dates.</p>
+            <button class="proof-trigger magenta mt-5" type="button" data-proof="show-lighting">Open gallery</button>
+          </div>
+        </article>
+        <article class="cyber-card overflow-hidden border border-white/12 bg-white/[.03] lg:col-span-2">
+          <img class="h-56 w-full object-cover" src="assets/artstation/editing-fx.jpg?v=20260511b" alt="Editing and FX cover" />
+          <div class="p-5">
+            <p class="text-xs uppercase text-phosphor">Editing / FX</p>
+            <h3 class="mt-3 font-display text-2xl text-signal">Portraits, model work, self-image, and post treatment</h3>
+            <p class="mt-3 text-sm leading-6 text-signal/62">A visual texture bank for campaign treatments, artist identity, social cuts, and experimental direction.</p>
+            <button class="proof-trigger phosphor mt-5" type="button" data-proof="editing-fx">Open gallery</button>
+          </div>
+        </article>
+        <article class="cyber-card overflow-hidden border border-white/12 bg-white/[.03] lg:col-span-3">
+          <img class="h-56 w-full object-cover" src="assets/artstation/digital-art-494-b05c0762-a4e0-4752-91ec-7205c5935d9a.jpg?v=20260511b" alt="Digital Art cover" />
+          <div class="p-5">
+            <p class="text-xs uppercase text-cyan">Digital art</p>
+            <h3 class="mt-3 font-display text-2xl text-signal">Procedural worlds and screen-native artifacts</h3>
+            <p class="mt-3 text-sm leading-6 text-signal/62">Still-image worldbuilding that supports the brand's glitch, multimedia, CRT, and synthetic-light instincts.</p>
+            <button class="proof-trigger mt-5" type="button" data-proof="digital-art">Open gallery</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="systems" class="border-y border-white/10 bg-white/[.035]">
+      <div class="mx-auto grid max-w-7xl gap-10 px-5 py-20 lg:grid-cols-[.9fr_1.1fr]">
+        <div>
+          <p class="text-xs uppercase text-phosphor">What gets built</p>
+          <h2 class="mt-3 font-display text-4xl font-bold text-signal md:text-6xl">Designed chaos, clean handoff.</h2>
+          <p class="mt-6 text-sm leading-7 text-signal/68">The show can feel unstable, reactive, and high-voltage on purpose. Behind it, the files, cues, routing, timing, and operator notes stay legible enough for the crew to trust.</p>
+        </div>
+        <div class="grid gap-3 sm:grid-cols-2">
+          <div class="border border-white/12 bg-void/55 p-6">
+            <p class="text-xs uppercase text-cyan">01</p>
+            <h3 class="mt-5 font-display text-2xl text-signal">Concert visual packages</h3>
+            <p class="mt-3 text-sm leading-6 text-signal/62">Loops, song moments, screen content, live VJ language, and artist-specific visual worlds.</p>
+          </div>
+          <div class="border border-white/12 bg-void/55 p-6">
+            <p class="text-xs uppercase text-magenta">02</p>
+            <h3 class="mt-5 font-display text-2xl text-signal">Laser and lighting design</h3>
+            <p class="mt-3 text-sm leading-6 text-signal/62">Programming, deployment planning, beam-safe visual rhythm, and stage looks for concerts and private events.</p>
+          </div>
+          <div class="border border-white/12 bg-void/55 p-6">
+            <p class="text-xs uppercase text-phosphor">03</p>
+            <h3 class="mt-5 font-display text-2xl text-signal">Immersive installations</h3>
+            <p class="mt-3 text-sm leading-6 text-signal/62">Interactive environments, projection studies, sensor-driven rooms, and festival or museum-ready experiences.</p>
+          </div>
+          <div class="border border-white/12 bg-void/55 p-6">
+            <p class="text-xs uppercase text-cyan">04</p>
+            <h3 class="mt-5 font-display text-2xl text-signal">Motion graphics</h3>
+            <p class="mt-3 text-sm leading-6 text-signal/62">Titles, social cuts, content systems, branding motion, and campaign visuals with a harder signal.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="signal" class="mx-auto max-w-7xl px-5 py-20">
+      <div class="grid gap-5 lg:grid-cols-[1.1fr_.9fr]">
+        <div class="cyber-card neon-panel bg-white/[.035] p-8">
+          <p class="text-xs uppercase text-cyan">Public signal / @datamage.art</p>
+          <h2 class="mt-4 font-display text-4xl font-bold text-signal md:text-6xl">Make the impossible room behave.</h2>
+          <p class="mt-6 text-sm leading-7 text-signal/68">The public signal is funny, technical, and allergic to fake mystique: bring the weird idea, the loud room, the questionable deadline, and the pile of incompatible gear. We will make it hit on purpose.</p>
+        </div>
+        <div class="cyber-card border border-phosphor/30 bg-phosphor/10 p-8">
+          <p class="text-xs uppercase text-phosphor">Bio line</p>
+          <blockquote class="mt-6 font-display text-3xl leading-tight text-signal">"High-voltage art for rooms that refuse to be normal."</blockquote>
+          <p class="mt-5 text-sm leading-7 text-signal/68">Visuals, lights, lasers, projection, analog weirdness, and the technician brain that keeps the chaos from eating the show.</p>
+          <a class="mt-6 inline-block border border-phosphor/60 px-4 py-2 text-xs uppercase text-phosphor hover:bg-phosphor hover:text-void" href="https://www.instagram.com/datamage.art/" target="_blank" rel="noreferrer">Instagram profile</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="clients" class="mx-auto max-w-7xl px-5 pb-20">
+      <div class="grid gap-4 md:grid-cols-3">
+        <div class="border border-cyan/25 bg-cyan/10 p-6">
+          <p class="text-xs uppercase text-cyan">Artists</p>
+          <h3 class="mt-8 font-display text-3xl text-signal">A visual identity that can perform live.</h3>
+          <p class="mt-4 text-sm leading-7 text-signal/66">For tours, one-off shows, releases, and content packages that need to feel unmistakably yours.</p>
+        </div>
+        <div class="border border-phosphor/25 bg-phosphor/10 p-6">
+          <p class="text-xs uppercase text-phosphor">Festivals</p>
+          <h3 class="mt-8 font-display text-3xl text-signal">Installations people walk toward.</h3>
+          <p class="mt-4 text-sm leading-7 text-signal/66">Programmable moments, stage support, projection environments, and media systems built for flow.</p>
+        </div>
+        <div class="border border-magenta/25 bg-magenta/10 p-6">
+          <p class="text-xs uppercase text-magenta">Museums and venues</p>
+          <h3 class="mt-8 font-display text-3xl text-signal">Digital work that holds a room.</h3>
+          <p class="mt-4 text-sm leading-7 text-signal/66">Immersive, interactive, and spatial concepts with enough technical clarity to move from sketch to install.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="intake" class="signal-intake relative overflow-hidden border-t border-cyan/25 text-signal">
+      <div class="relative z-10 mx-auto grid max-w-7xl gap-10 px-5 py-20 lg:grid-cols-[.9fr_1.1fr]">
+        <div class="signal-intake-panel p-6 md:p-8">
+          <p class="text-xs font-semibold uppercase text-cyan">Project intake</p>
+          <h2 class="mt-3 font-display text-4xl font-bold md:text-6xl">Make the phone ring. Make the room sing.</h2>
+          <p class="mt-6 max-w-xl text-sm leading-7 text-signal/70">First-pass intake for artists, festivals, museums, and production teams: audience, room, deadline, deliverables, tech constraints, and the emotional voltage the project needs.</p>
+          <div class="mt-8 border border-magenta/30 bg-magenta/10 p-4 text-xs leading-6 text-signal/76">
+            <strong>Asset request:</strong> final reel clips, project stills, client logos, artist credits, installation photos, press quotes, and any show documentation that proves scale.
+          </div>
+        </div>
+        <form id="intake-form" class="signal-intake-panel grid gap-4 p-6 md:p-8" action="mailto:booking@datamage.art" method="post" enctype="text/plain" data-intake-endpoint="PASTE_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE">
+          <input type="hidden" name="segment" value="datamage-art-intake" />
+          <label class="hidden" aria-hidden="true">Leave this field empty<input name="company_website" tabindex="-1" autocomplete="off" /></label>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <label class="grid gap-2 text-xs uppercase text-cyan">Name<input name="name" required class="signal-input px-4 py-3 text-sm normal-case" /></label>
+            <label class="grid gap-2 text-xs uppercase text-cyan">Email<input name="email" type="email" required class="signal-input px-4 py-3 text-sm normal-case" /></label>
+          </div>
+          <label class="grid gap-2 text-xs uppercase text-cyan">Project type
+            <select name="project_type" class="signal-input px-4 py-3 text-sm normal-case">
+              <option>Concert visuals / VJ package</option>
+              <option>Festival installation</option>
+              <option>Museum or immersive venue installation</option>
+              <option>Laser / lighting / stage design</option>
+              <option>Motion graphics or campaign content</option>
+            </select>
+          </label>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <label class="grid gap-2 text-xs uppercase text-cyan">Timeline<input name="timeline" placeholder="Event date or launch window" class="signal-input px-4 py-3 text-sm normal-case" /></label>
+            <label class="grid gap-2 text-xs uppercase text-cyan">Budget range<input name="budget" placeholder="$ / production range" class="signal-input px-4 py-3 text-sm normal-case" /></label>
+          </div>
+          <label class="grid gap-2 text-xs uppercase text-cyan">What are we building?
+            <textarea name="brief" rows="5" required class="signal-input px-4 py-3 text-sm normal-case" placeholder="Audience, venue, deliverables, technical constraints, and the feeling people should leave with."></textarea>
+          </label>
+          <p class="text-xs leading-5 text-signal/58">By sending this intake, you agree that DATA/MAGE may use the details you provide to respond about your project. See <a class="text-cyan underline decoration-cyan/40 underline-offset-4 hover:text-phosphor" href="privacy.html">privacy notes</a>.</p>
+          <div class="cf-turnstile" data-sitekey="PASTE_TURNSTILE_SITEKEY_HERE" data-theme="dark"></div>
+          <button class="border border-phosphor/70 bg-phosphor/10 px-6 py-4 text-left font-display text-lg font-bold text-phosphor transition hover:bg-phosphor hover:text-void" type="submit">Start the transmission</button>
+          <p id="intake-status" class="intake-status text-xs uppercase" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="proof-modal" class="proof-modal">
+    <div class="proof-modal-shell">
+      <div class="flex items-start justify-between gap-4 border-b border-white/10 p-5 md:p-7">
+        <div>
+          <p id="proof-modal-kicker" class="text-xs uppercase text-cyan"></p>
+          <h2 id="proof-modal-title" class="mt-2 font-display text-3xl font-bold text-signal md:text-5xl"></h2>
+        </div>
+        <button id="proof-modal-close" class="border border-white/20 px-3 py-2 text-xs uppercase text-signal/72 transition hover:border-magenta hover:text-magenta" type="button">Close</button>
+      </div>
+      <div class="grid gap-5 p-5 md:p-7 lg:grid-cols-[1.25fr_.75fr]">
+        <div id="proof-modal-media" class="grid gap-4"></div>
+        <div>
+          <p id="proof-modal-copy" class="text-sm leading-7 text-signal/70"></p>
+          <div id="proof-modal-credits" class="mt-6 grid gap-2 text-xs uppercase text-signal/60"></div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="cv-modal" class="proof-modal">
+    <div class="proof-modal-shell">
+      <div class="flex items-start justify-between gap-4 border-b border-white/10 p-5 md:p-7">
+        <div>
+          <p class="text-xs uppercase text-phosphor">CV / quick reference</p>
+          <h2 class="mt-2 font-display text-3xl font-bold text-signal md:text-5xl">Live visual systems CV</h2>
+        </div>
+        <button id="cv-close" class="border border-white/20 px-3 py-2 text-xs uppercase text-signal/72 transition hover:border-magenta hover:text-magenta" type="button">Close</button>
+      </div>
+      <div class="grid gap-6 p-5 md:p-7 lg:grid-cols-[.85fr_1.15fr]">
+        <aside class="cyber-card border border-cyan/25 bg-cyan/10 p-5">
+          <p class="text-xs uppercase text-cyan">Summary</p>
+          <p class="mt-4 text-sm leading-7 text-signal/72">Digital artist, laser designer, stage designer, and lighting designer with 16 years of professional experience in live events.</p>
+          <p class="mt-6 text-xs uppercase text-phosphor">Core skills</p>
+          <div class="mt-4 flex flex-wrap gap-2 text-xs uppercase text-signal/68">
+            <span class="border border-white/12 px-2 py-1">Lighting</span>
+            <span class="border border-white/12 px-2 py-1">Visual effects</span>
+            <span class="border border-white/12 px-2 py-1">Pre-viz</span>
+            <span class="border border-white/12 px-2 py-1">Video editing</span>
+            <span class="border border-white/12 px-2 py-1">Photo editing</span>
+            <span class="border border-white/12 px-2 py-1">Stage design</span>
+            <span class="border border-white/12 px-2 py-1">Live visuals</span>
+            <span class="border border-white/12 px-2 py-1">Algorithmic art</span>
+            <span class="border border-white/12 px-2 py-1">Lasers</span>
+            <span class="border border-white/12 px-2 py-1">SFX / cryo</span>
+            <span class="border border-white/12 px-2 py-1">LED tech</span>
+          </div>
+          <p class="mt-6 text-xs uppercase text-magenta">Software / systems</p>
+          <p class="mt-4 text-sm leading-7 text-signal/64">GRAND MA2, GRAND MA3, After Effects, Illustrator, Photoshop, MA3d, Resolume Arena, TouchDesigner, MadMapper, Synesthesia, Pangolin Beyond, OBS, microdosevr, Radiator Laser Synth, NDI, Cinema 4D, Avolites, Chamsys, MADRIX, HOG Systems, Agentic AI systems, custom analog video systems.</p>
+        </aside>
+        <div class="grid gap-5">
+          <section class="cyber-card border border-white/12 bg-white/[.035] p-5">
+            <p class="text-xs uppercase text-cyan">Touring credits</p>
+            <div class="mt-4 grid gap-2 text-sm leading-6 text-signal/72 sm:grid-cols-2">
+              <span>Tobe Nwigwe / lighting designer</span>
+              <span>Red Hot Chili Peppers / lighting tech</span>
+              <span>Ruel / lighting designer</span>
+              <span>$uicideboy$ / laserist, visual artist</span>
+              <span>Arijit Singh / laserist</span>
+              <span>Tetrarch / lighting designer</span>
+              <span>Normani / lighting operator</span>
+              <span>Cashmere Cat / lighting designer</span>
+              <span>Snakehips / lighting designer, VJ, visual artist</span>
+              <span>Cheat Codes / lighting designer, VJ, visual artist</span>
+              <span>Jauz / lighting tech</span>
+              <span>Jai Wolf / lighting tech, laser tech, SFX tech</span>
+              <span>Butcher Babies / lighting designer</span>
+            </div>
+          </section>
+          <section class="cyber-card border border-white/12 bg-white/[.035] p-5">
+            <p class="text-xs uppercase text-magenta">Festival / venue credits</p>
+            <div class="mt-4 grid gap-2 text-sm leading-6 text-signal/72 sm:grid-cols-2">
+              <span>Upward Artistry / production director</span>
+              <span>Blaq Lotus Studios / installation director, designer, content designer</span>
+              <span>Gateway Productions / lighting tech, video tech, lighting operator</span>
+              <span>Electric Zoo 2019 / lighting director, AMF Stage</span>
+              <span>Day For Night 2015-2017 / art side production manager</span>
+              <span>In Bloom 2018 / lighting tech</span>
+              <span>Houston Whatever Fest 2015-2017 / lighting designer</span>
+              <span>White Oak Music Hall 2016-2018 / lighting department head</span>
+              <span>Warehouse Live 2015-2016 / lighting department head</span>
+              <span>Numb3rs Nightclub 2014-2015 / lighting designer</span>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="image-lightbox" class="image-lightbox">
+    <div>
+      <div class="flex items-center justify-between gap-4 border-b border-white/10 p-4">
+        <p id="image-lightbox-caption" class="text-xs uppercase text-signal/68"></p>
+        <button id="image-lightbox-close" class="border border-white/20 px-3 py-2 text-xs uppercase text-signal/72 transition hover:border-cyan hover:text-cyan" type="button">Close</button>
+      </div>
+      <img id="image-lightbox-img" src="" alt="" />
+    </div>
+  </dialog>
+
+  <footer class="relative z-10 border-t border-white/10 px-5 py-8 text-xs text-signal/55">
+    <div class="mx-auto flex max-w-7xl flex-col justify-between gap-3 sm:flex-row">
+      <p>:DATA/MAGE - creative visual systems</p>
+      <p>Concerts / festivals / museums / immersive venues</p>
+    </div>
+  </footer>
+
+  <script>
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    const orbit = document.getElementById("hero-orbit");
+    const mageCore = document.querySelector(".mage-core");
+    const tesseractHotspot = document.querySelector(".tesseract-hotspot");
+    const ruttField = document.getElementById("rutt-field");
+    const cursorGlow = document.getElementById("cursor-glow");
+    const proofModal = document.getElementById("proof-modal");
+    const proofModalTitle = document.getElementById("proof-modal-title");
+    const proofModalKicker = document.getElementById("proof-modal-kicker");
+    const proofModalCopy = document.getElementById("proof-modal-copy");
+    const proofModalMedia = document.getElementById("proof-modal-media");
+    const proofModalCredits = document.getElementById("proof-modal-credits");
+    const proofModalClose = document.getElementById("proof-modal-close");
+    const featuredVideoPoster = document.getElementById("featured-video-poster");
+    const featuredVideoBadge = document.getElementById("featured-video-badge");
+    const featuredVideoTitle = document.getElementById("featured-video-title");
+    const featuredVideoCopy = document.getElementById("featured-video-copy");
+    const cvModal = document.getElementById("cv-modal");
+    const cvOpen = document.getElementById("cv-open");
+    const cvClose = document.getElementById("cv-close");
+    const imageLightbox = document.getElementById("image-lightbox");
+    const imageLightboxImg = document.getElementById("image-lightbox-img");
+    const imageLightboxCaption = document.getElementById("image-lightbox-caption");
+    const imageLightboxClose = document.getElementById("image-lightbox-close");
+    const intakeForm = document.getElementById("intake-form");
+    const intakeStatus = document.getElementById("intake-status");
+    const artstationVideoProof = {
+      visualMixes: [
+        { type: "embed", src: "https://www.youtube-nocookie.com/embed/lnzQT9zSij0?feature=oembed&rel=0", title: "Paul Wall - Platinum Playa (Official Music Video)", label: "Analog and digital VFX, studio liaison" },
+        { type: "embed", src: "https://www.youtube-nocookie.com/embed/FjaIQ9qe3Eo?feature=oembed&rel=0", title: "Paul Wall - Love 4 Rent (Official Music Video)", label: "Studio liaison, lighting" },
+        { type: "embed", src: "https://www.youtube-nocookie.com/embed/pK1JDZU0d3g?feature=oembed&rel=0", title: "Paul Wall x Z-Ro - Swang Down ft. Crys Wall & Big Tonk (Official Music Video)", label: "Projection, visuals, studio liaison" },
+        { type: "embed", src: "https://www.youtube-nocookie.com/embed/GZ-uFhTng5g?feature=oembed&rel=0", title: "Oceans of Slumber - Where Gods Fear To Speak (Official Music Video) 2024", label: "Studio liaison, lighting" },
+        { type: "embed", src: "https://www.youtube-nocookie.com/embed/vsiLTWdD39Y?feature=oembed&rel=0", title: "Glass Beams - Mirage", label: "Full animation and artwork" },
+        { type: "embed", src: "https://www.youtube-nocookie.com/embed/33W9UTpm26Y?feature=oembed&rel=0", title: "Kedsley - Synth.WAV", label: "Full animation and artwork" },
+        { type: "embed", src: "https://www.youtube-nocookie.com/embed/yqJ_NZ--Akc?feature=oembed&rel=0", title: "Kedsley - DreamEater", label: "Full animation and artwork" },
+        { type: "embed", src: "https://www.youtube-nocookie.com/embed/llDYOaThilo?start=25&feature=oembed&rel=0", title: "SARATONIN HAS SOME WEIRD WUBZ IN HER POCKET", label: "Livestream recording and live editing/visuals" },
+        { type: "embed", src: "https://www.youtube-nocookie.com/embed/3uI4fFgrHcA?start=1203&feature=oembed&rel=0", title: "BEN VIBIN 1HR SHOW VISUALS", label: "Livestream recording and live editing/visuals" },
+        { type: "embed", src: "https://www.youtube-nocookie.com/embed/R9q4n88woEA?start=1882&feature=oembed&rel=0", title: "COHEN MELTS YOUR FACE FOR LAUTERHAUS END OF YEAR", label: "Livestream recording and live editing/visuals" },
+        { type: "embed", src: "https://www.youtube-nocookie.com/embed/A5fxucik2BE?feature=oembed&rel=0", title: "A GHOST IN REAL LIFE AND IN YOUR COMPUTER SCREEN TOO", label: "Livestream recording and live editing/visuals" }
+      ],
+      lightingVideos: [
+        { type: "embed", src: "https://www.youtube-nocookie.com/embed/2k2NSISFoRs?feature=oembed&rel=0", title: "Ruel live in London 4/8/22, pt.1", label: "Lighting designer, Ruel live in London pt.1" },
+        { type: "embed", src: "https://www.youtube-nocookie.com/embed/-cjpT_S5_Y4?feature=oembed&rel=0", title: "Ruel live in London, 4/8/22, pt.2", label: "Lighting designer, Ruel live in London pt.2" },
+        { type: "embed", src: "https://www.youtube-nocookie.com/embed/pGcbm6ad1Mk?start=1609&feature=oembed&rel=0", title: "BEN VIBIN - LIVE @THEOVENATX", label: "Live visuals" },
+        { type: "embed", src: "https://www.youtube-nocookie.com/embed/pbAJl-f4O9c?feature=oembed&rel=0", title: "Tobe Nwigwe Live @ Afropunk NYC 2023", label: "Lighting director, Tobe Nwigwe live at Brooklyn Afropunk Festival 2023" },
+        { type: "embed", src: "https://player.vimeo.com/video/802591270?h=2d1574494c&app_id=122963&dnt=1", title: "RHCP en Tokyo, Japon - 4K", label: "Lighting tech, Red Hot Chili Peppers, Tokyo Dome 2023" },
+        { type: "embed", src: "https://www.youtube-nocookie.com/embed/TN3KT96avfU?feature=oembed&rel=0", title: "NGHTMRE @ Aragon Ballroom NYE '19", label: "Lighting director, NGHTMRE at Aragon Ballroom NYE 2019" },
+        { type: "embed", src: "https://www.youtube-nocookie.com/embed/Z95QysBiTDw?feature=oembed&rel=0", title: "Cashmere Cat - Live at 1720, DTLA 1/11/2020", label: "Lighting designer, Cashmere Cat" },
+        { type: "embed", src: "https://www.youtube-nocookie.com/embed/vSHdTgljYXA?start=183&feature=oembed&rel=0", title: "Nora En Pure - Electric Zoo, 2019", label: "Lighting director, Nora En Pure, Electric Zoo 2019" },
+        { type: "embed", src: "https://www.youtube-nocookie.com/embed/agvKCB15HOc?feature=oembed&rel=0", title: "Day for Night 2017 Recap", label: "Art side production management, Day For Night Festival 2017" },
+        { type: "embed", src: "https://www.youtube-nocookie.com/embed/KZdV-lhzC74?feature=oembed&rel=0", title: "Day for Night 2016 Recap", label: "Art side production management, Day For Night Festival 2016" },
+        { type: "embed", src: "https://www.youtube-nocookie.com/embed/J2VFq70MYQ0?feature=oembed&rel=0", title: "Day for Night 2015 Video Recap", label: "Art side production management, Day For Night Festival 2015" }
+      ]
+    };
+    const proofItems = {
+      "visual-mixes": {
+        projectHash: "3qJ3dJ",
+        kicker: "Music video / visuals",
+        title: "Visual Mixes / Music Videos",
+        copy: "Analog and digital VFX, studio liaison work, projection, lighting, animation, artwork, livestream visuals, and live editing collected as a fast-read proof packet.",
+        credits: ["Paul Wall - Platinum Playa", "Paul Wall - Love 4 Rent", "Paul Wall x Z-Ro - Swang Down", "Glass Beams - Mirage"],
+        media: [
+          { type: "image", src: "assets/artstation/live-visual-mixes.jpg?v=20260511b", alt: "Visual Mixes and Music Videos cover" },
+          ...artstationVideoProof.visualMixes
+        ]
+      },
+      "platinum-playa": {
+        kicker: "Featured embed",
+        title: "Paul Wall - Platinum Playa",
+        copy: "A direct video proof point for mixed-media treatment, music-video support, and the kind of artist-facing production polish that belongs inside the site instead of sending people away.",
+        credits: ["Analog/digital VFX", "Studio liaison", "Music-video production support"],
+        media: [
+          { type: "embed", src: "https://www.youtube-nocookie.com/embed/lnzQT9zSij0?rel=0&autoplay=1", title: "Paul Wall - Platinum Playa" }
+        ]
+      },
+      "featured-video": {
+        kicker: "Featured embed",
+        title: "Paul Wall - Platinum Playa",
+        copy: "A direct video proof point for mixed-media treatment, music-video support, and the kind of artist-facing production polish that belongs inside the site instead of sending people away.",
+        credits: ["Analog/digital VFX", "Studio liaison", "Music-video production support"],
+        media: [
+          {
+            type: "embed",
+            src: "https://www.youtube-nocookie.com/embed/lnzQT9zSij0?rel=0",
+            poster: "assets/artstation/live-visual-mixes.jpg?v=20260511b",
+            title: "Paul Wall - Platinum Playa",
+            label: "Analog/digital VFX and studio liaison"
+          }
+        ]
+      },
+      "lighting-videos": {
+        projectHash: "14J2nq",
+        kicker: "Live lighting videos",
+        title: "Ruel, Tobe Nwigwe, RHCP, NGHTMRE, Cashmere Cat",
+        copy: "Lighting design, lighting direction, live visuals, tech work, and festival-scale stage execution grouped for bookers and production teams.",
+        credits: ["Lighting design", "Lighting direction", "Live visuals", "Festival execution"],
+        media: [
+          { type: "image", src: "assets/artstation/live-lighting-videos.jpg?v=20260511b", alt: "Live Lighting Videos cover" },
+          ...artstationVideoProof.lightingVideos
+        ]
+      },
+      "show-lighting": {
+        projectHash: "8w4rbn",
+        kicker: "Live show lighting",
+        title: "Tour, festival, projection, and laser credits",
+        copy: "Union is Creation immersive sound bath, RHCP Unlimited Love World Tour tech work, Ruel stage design, Greyday laser/visual work, projection mapping, Electric Zoo, Jai Wolf, and Cashmere Cat festival dates.",
+        credits: ["Tour tech", "Laser and visual work", "Projection mapping", "Immersive sound bath"],
+        media: [
+          { type: "image", src: "assets/artstation/live-show-lighting.jpg?v=20260511b", alt: "Live Show Lighting cover" }
+        ]
+      },
+      "editing-fx": {
+        projectHash: "xYGm2E",
+        kicker: "Editing / FX",
+        title: "Portraits, model work, self-image, and post treatment",
+        copy: "A visual texture bank for campaign treatments, artist identity, social cuts, and experimental direction.",
+        credits: ["Portrait editing", "Model work", "Post treatment", "Campaign textures"],
+        media: [
+          { type: "image", src: "assets/artstation/editing-fx.jpg?v=20260511b", alt: "Editing and FX cover" }
+        ]
+      },
+      "digital-art": {
+        projectHash: "ZerJxR",
+        kicker: "Digital art",
+        title: "Procedural worlds and screen-native artifacts",
+        copy: "Still-image worldbuilding and screen-native motion studies that support the brand's glitch, multimedia, CRT, and synthetic-light instincts.",
+        credits: ["Procedural worlds", "CRT texture", "Synthetic light", "Motion studies"],
+        media: [
+          { type: "image", src: "assets/artstation/digital-art-494-b05c0762-a4e0-4752-91ec-7205c5935d9a.jpg?v=20260511b", alt: "Digital Art cover" }
+        ]
+      }
+    };
+    let stars = [];
+    let pointer = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    let ruttPointer = { x: .5, y: .5 };
+    let ruttTarget = { x: .5, y: .5 };
+    let ruttVelocity = { x: 0, y: 0 };
+    let wakeMemory = 0;
+    let wakeDirection = { x: 1, y: 0 };
+    let wakeSamples = [];
+    let ruttClickPulses = [];
+    let lastWakeSampleAt = 0;
+    let ruttScale = { x: 1, y: 1 };
+    let ruttEnergy = .35;
+    let ruttPulse = 0;
+    let artstationPortfolio = null;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const ruttPaths = [];
+    const blockedEmbedIds = new Set(["pbAJl-f4O9c"]);
+    const supplementalProjectMedia = {
+      "3qJ3dJ": [
+        {
+          afterVideoId: "pK1JDZU0d3g",
+          media: {
+            type: "embed",
+            src: "https://www.youtube-nocookie.com/embed/rH4vJTQsMFU?rel=0",
+            poster: "https://i.ytimg.com/vi/rH4vJTQsMFU/hqdefault.jpg",
+            title: "Collude - impetus, featuring Miles McMillan of Current Comfort - Official Music Video",
+            label: "VFX and projection"
+          }
+        }
+      ],
+      "14J2nq": [
+        {
+          position: "start",
+          media: {
+            type: "embed",
+            src: "https://www.youtube-nocookie.com/embed/7Ji_Oa0VV-g?rel=0",
+            poster: "https://i.ytimg.com/vi/7Ji_Oa0VV-g/hqdefault.jpg",
+            title: "Joe Marcinek Live At The Way Up",
+            label: "Live video / lighting and visual proof"
+          }
+        }
+      ]
+    };
+
+    if (ruttField) {
+      const svgNamespace = "http://www.w3.org/2000/svg";
+      for (let i = 0; i < 54; i++) {
+        const path = document.createElementNS(svgNamespace, "path");
+        ruttField.appendChild(path);
+        ruttPaths.push(path);
+      }
+    }
+
+    function decodeHtml(value = "") {
+      const textarea = document.createElement("textarea");
+      textarea.innerHTML = value;
+      return textarea.value;
+    }
+
+    function normalizeEmbedSrc(src = "") {
+      if (!src) return "";
+      const url = new URL(decodeHtml(src));
+      if (url.hostname.includes("youtube")) {
+        const start = url.searchParams.get("start");
+        url.search = "";
+        if (start) url.searchParams.set("start", start);
+        url.searchParams.set("rel", "0");
+      }
+      if (url.hostname.includes("vimeo")) {
+        url.searchParams.set("dnt", "1");
+      }
+      return url.toString();
+    }
+
+    function embedVideoId(src = "") {
+      try {
+        const url = new URL(src);
+        return url.pathname.split("/").filter(Boolean).pop() || "";
+      } catch {
+        return "";
+      }
+    }
+
+    function posterForEmbed(src = "", fallback = "assets/artstation/live-visual-mixes.jpg?v=20260511b") {
+      try {
+        const url = new URL(src);
+        if (url.hostname.includes("youtube")) {
+          return `https://i.ytimg.com/vi/${embedVideoId(src)}/hqdefault.jpg`;
+        }
+      } catch {
+        return fallback;
+      }
+      return fallback;
+    }
+
+    async function loadArtstationPortfolio() {
+      if (artstationPortfolio) return artstationPortfolio;
+      const response = await fetch("artstation-projects.json");
+      if (!response.ok) throw new Error("ArtStation cache unavailable");
+      artstationPortfolio = await response.json();
+      return artstationPortfolio;
+    }
+
+    function mediaFromArtstationProject(project) {
+      const media = (project?.assets || [])
+        .map((asset, index) => {
+          const assetTitle = decodeHtml((asset.title || "").trim());
+          const titleMatch = asset.player_embedded?.match(/title="([^"]+)"/);
+          const srcMatch = asset.player_embedded?.match(/src="([^"]+)"/);
+          const embedTitle = decodeHtml(titleMatch?.[1] || assetTitle || project.title);
+          const fallbackLabel = assetTitle || `${project.title} / ${asset.asset_type || "asset"} ${String(index + 1).padStart(2, "0")}`;
+          if (asset.has_embedded_player && srcMatch) {
+            const src = normalizeEmbedSrc(srcMatch[1]);
+            if (blockedEmbedIds.has(embedVideoId(src)) && asset.image_url) {
+              return {
+                type: "image",
+                src: asset.image_url,
+                alt: embedTitle,
+                title: embedTitle,
+                label: `${assetTitle || "Video proof"} / embed unavailable`
+              };
+            }
+            return {
+              type: "embed",
+              src,
+              poster: asset.image_url,
+              title: embedTitle,
+              label: assetTitle || embedTitle
+            };
+          }
+          if (asset.has_image && asset.image_url) {
+            return {
+              type: "image",
+              src: asset.image_url,
+              alt: fallbackLabel,
+              title: fallbackLabel,
+              label: fallbackLabel
+            };
+          }
+          return null;
+        })
+        .filter(Boolean);
+      supplementalProjectMedia[project?.hash_id]?.forEach((entry) => {
+        if (entry.position === "start") {
+          media.unshift(entry.media);
+          return;
+        }
+        const targetIndex = media.findIndex((mediaItem) => embedVideoId(mediaItem.src) === entry.afterVideoId);
+        media.splice(targetIndex >= 0 ? targetIndex + 1 : media.length, 0, entry.media);
+      });
+      return media;
+    }
+
+    async function proofMediaForItem(item) {
+      if (!item.projectHash) return item.media;
+      try {
+        const portfolio = await loadArtstationPortfolio();
+        const project = portfolio.data?.find((entry) => entry.hash_id === item.projectHash);
+        const artstationMedia = mediaFromArtstationProject(project);
+        return artstationMedia.length ? artstationMedia : item.media;
+      } catch (error) {
+        console.warn(error);
+        return item.media;
+      }
+    }
+
+    async function hydrateFeaturedVideo() {
+      if (!featuredVideoPoster || !featuredVideoTitle || !featuredVideoCopy) return;
+      try {
+        const supplementalVideos = Object.entries(supplementalProjectMedia).flatMap(([hash, entries]) =>
+          entries.map((entry) => ({
+            ...entry.media,
+            projectTitle: hash === "14J2nq" ? "Live Lighting Videos" : "Visual Mixes/Music Videos"
+          }))
+        );
+        const videos = [
+          ...artstationVideoProof.visualMixes.map((media) => ({ ...media, projectTitle: "Visual Mixes/Music Videos" })),
+          ...artstationVideoProof.lightingVideos.map((media) => ({ ...media, projectTitle: "Live Lighting Videos" })),
+          ...supplementalVideos
+        ].filter((media) => media.type === "embed" && !blockedEmbedIds.has(embedVideoId(media.src)));
+        if (!videos.length) return;
+        const selected = videos[Math.floor(Math.random() * videos.length)];
+        const caption = selected.label && selected.label !== selected.title ? selected.label : selected.projectTitle;
+        featuredVideoPoster.src = selected.poster || posterForEmbed(selected.src, selected.projectTitle === "Live Lighting Videos" ? "assets/artstation/live-lighting-videos.jpg?v=20260511b" : "assets/artstation/live-visual-mixes.jpg?v=20260511b");
+        featuredVideoPoster.alt = selected.title;
+        featuredVideoBadge.textContent = selected.projectTitle;
+        featuredVideoTitle.textContent = selected.title;
+        featuredVideoCopy.textContent = caption;
+        proofItems["featured-video"] = {
+          kicker: "Featured embed",
+          title: selected.title,
+          copy: caption,
+          credits: [selected.projectTitle, caption],
+          media: [selected]
+        };
+      } catch (error) {
+        console.warn(error);
+      }
+    }
+
+    function renderProofMedia(item, mediaItems = item.media) {
+      if (!proofModalMedia) return;
+      proofModalMedia.replaceChildren();
+      mediaItems.forEach((media) => {
+        const frame = document.createElement("div");
+        frame.className = "proof-modal-media overflow-hidden";
+        if (media.type === "embed") {
+          const slot = document.createElement("div");
+          slot.className = "aspect-video";
+          const button = document.createElement("button");
+          button.className = "proof-video-card";
+          button.type = "button";
+          button.setAttribute("aria-label", `Play ${media.title || item.title}`);
+          if (media.poster) {
+            const img = document.createElement("img");
+            img.src = media.poster;
+            img.alt = media.title || item.title;
+            button.appendChild(img);
+          }
+          const overlay = document.createElement("div");
+          overlay.className = "proof-play";
+          const icon = document.createElement("span");
+          icon.textContent = ">";
+          overlay.appendChild(icon);
+          button.appendChild(overlay);
+          button.addEventListener("click", () => {
+            const iframe = document.createElement("iframe");
+            const src = new URL(media.src);
+            if (src.hostname.includes("youtube") && !src.searchParams.has("autoplay")) {
+              src.searchParams.set("autoplay", "1");
+            }
+            iframe.src = src.toString();
+            iframe.title = media.title || item.title;
+            iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+            iframe.allowFullscreen = true;
+            slot.replaceChildren(iframe);
+          });
+          slot.appendChild(button);
+          frame.appendChild(slot);
+        }
+        if (media.type === "video") {
+          const slot = document.createElement("div");
+          slot.className = "aspect-video";
+          const video = document.createElement("video");
+          video.src = media.src;
+          video.controls = true;
+          video.muted = true;
+          video.loop = true;
+          video.playsInline = true;
+          video.preload = "metadata";
+          slot.appendChild(video);
+          frame.appendChild(slot);
+        }
+        if (media.type === "image") {
+          frame.classList.add("min-h-[260px]");
+          const button = document.createElement("button");
+          const caption = media.title || media.label || media.alt || item.title;
+          button.className = "proof-image-button";
+          button.type = "button";
+          button.setAttribute("aria-label", `Expand ${caption}`);
+          const img = document.createElement("img");
+          img.src = media.src;
+          img.alt = media.alt || caption;
+          button.appendChild(img);
+          button.addEventListener("click", () => openImageLightbox({ ...media, title: caption }));
+          frame.appendChild(button);
+        }
+        if (media.label || media.title || media.alt) {
+          const footnote = document.createElement("div");
+          footnote.className = "proof-footnote";
+          const title = document.createElement("p");
+          title.className = "proof-footnote-title";
+          title.textContent = media.title || media.label || media.alt;
+          footnote.appendChild(title);
+          if (media.label && media.label !== title.textContent) {
+            const meta = document.createElement("p");
+            meta.className = "proof-footnote-meta";
+            meta.textContent = media.label;
+            footnote.appendChild(meta);
+          }
+          frame.appendChild(footnote);
+        }
+        proofModalMedia.appendChild(frame);
+      });
+    }
+
+    function openImageLightbox(media) {
+      if (!imageLightbox || !imageLightboxImg) return;
+      const caption = media.title || media.label || media.alt || "Expanded gallery image";
+      imageLightboxImg.src = media.src;
+      imageLightboxImg.alt = media.alt || caption;
+      if (imageLightboxCaption) imageLightboxCaption.textContent = caption;
+      imageLightbox.showModal();
+    }
+
+    function closeImageLightbox() {
+      if (!imageLightbox) return;
+      imageLightbox.close();
+      if (imageLightboxImg) {
+        imageLightboxImg.removeAttribute("src");
+        imageLightboxImg.alt = "";
+      }
+      if (imageLightboxCaption) imageLightboxCaption.textContent = "";
+    }
+
+    async function openProofModal(key) {
+      const item = proofItems[key];
+      if (!item || !proofModal) return;
+      proofModalKicker.textContent = item.kicker;
+      proofModalTitle.textContent = item.title;
+      proofModalCopy.textContent = item.copy;
+      proofModalCredits.replaceChildren();
+      item.credits.forEach((credit) => {
+        const line = document.createElement("span");
+        line.className = "border-l border-cyan/40 pl-3";
+        line.textContent = credit;
+        proofModalCredits.appendChild(line);
+      });
+      proofModalMedia.replaceChildren();
+      const loading = document.createElement("div");
+      loading.className = "proof-modal-media p-6 text-xs uppercase text-signal/58";
+      loading.textContent = "Loading portfolio assets";
+      proofModalMedia.appendChild(loading);
+      proofModal.showModal();
+      renderProofMedia(item, await proofMediaForItem(item));
+    }
+
+    function closeProofModal() {
+      if (!proofModal) return;
+      if (imageLightbox?.open) closeImageLightbox();
+      proofModal.close();
+      proofModalMedia?.replaceChildren();
+    }
+
+    document.querySelectorAll("[data-proof]").forEach((button) => {
+      button.addEventListener("click", () => openProofModal(button.dataset.proof));
+    });
+    proofModalClose?.addEventListener("click", closeProofModal);
+    proofModal?.addEventListener("click", (event) => {
+      if (event.target === proofModal) closeProofModal();
+    });
+    cvOpen?.addEventListener("click", () => cvModal?.showModal());
+    cvClose?.addEventListener("click", () => cvModal?.close());
+    cvModal?.addEventListener("click", (event) => {
+      if (event.target === cvModal) cvModal.close();
+    });
+    imageLightboxClose?.addEventListener("click", closeImageLightbox);
+    imageLightbox?.addEventListener("click", (event) => {
+      if (event.target === imageLightbox) closeImageLightbox();
+    });
+    intakeForm?.addEventListener("submit", async (event) => {
+      const endpoint = intakeForm.dataset.intakeEndpoint || "";
+      if (!endpoint || endpoint.includes("PASTE_GOOGLE_APPS_SCRIPT")) {
+        if (intakeStatus) {
+          intakeStatus.textContent = "Opening email fallback. Add the intake receiver for direct transmission.";
+          intakeStatus.classList.remove("is-error");
+        }
+        return;
+      }
+      event.preventDefault();
+      const submitButton = intakeForm.querySelector('button[type="submit"]');
+      const formData = new FormData(intakeForm);
+      const payload = Object.fromEntries(formData.entries());
+      payload.submitted_at = new Date().toISOString();
+      payload.source = "datamage-site";
+      payload.page_url = window.location.href;
+      payload.user_agent = navigator.userAgent;
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = "Transmitting...";
+      }
+      if (intakeStatus) {
+        intakeStatus.textContent = "Sending signal...";
+        intakeStatus.classList.remove("is-error");
+      }
+      try {
+        await fetch(endpoint, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+        intakeForm.reset();
+        if (intakeStatus) intakeStatus.textContent = "Transmission received. We will follow up soon.";
+      } catch (error) {
+        console.warn(error);
+        if (intakeStatus) {
+          intakeStatus.textContent = "Transmission failed. Email booking@datamage.art directly.";
+          intakeStatus.classList.add("is-error");
+        }
+      } finally {
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = "Start the transmission";
+        }
+      }
+    });
+    hydrateFeaturedVideo();
+
+    function resizeStars() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.floor(window.innerWidth * dpr);
+      canvas.height = Math.floor(window.innerHeight * dpr);
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      stars = Array.from({ length: Math.floor(window.innerWidth / 9) }, () => ({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        z: Math.random() * 1.6 + .25,
+        vx: (Math.random() - .5) * .096,
+        vy: Math.random() * .072 + .018
+      }));
+      if (ruttField) {
+        const rect = ruttField.getBoundingClientRect();
+        const unit = Math.max(1, Math.min(rect.width, rect.height));
+        ruttScale = {
+          x: rect.width / unit,
+          y: rect.height / unit
+        };
+      }
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      const now = performance.now();
+      stars = stars.filter((star) => !star.ttl || now - star.born < star.ttl);
+      for (const star of stars) {
+        if (star.burst) {
+          const age = now - star.born;
+          const braking = star.tesseractBurst ? (age < 180 ? .91 : .86) : (age < 300 ? .94 : .82);
+          star.vx *= braking;
+          star.vy *= braking;
+          if (age > (star.tesseractBurst ? 180 : 300)) {
+            star.vx += (star.driftVx - star.vx) * (star.tesseractBurst ? .075 : .055);
+            star.vy += (star.driftVy - star.vy) * (star.tesseractBurst ? .075 : .055);
+          }
+        }
+        star.x += star.vx * star.z;
+        star.y += star.vy * star.z;
+        if (star.y > window.innerHeight + 4) star.y = -4;
+        if (star.x < -4) star.x = window.innerWidth + 4;
+        if (star.x > window.innerWidth + 4) star.x = -4;
+        const ageRatio = star.ttl ? Math.min(1, (now - star.born) / star.ttl) : 0;
+        const alpha = star.ttl ? Math.max(0, (1 - ageRatio) * (star.alpha || 1)) : 0.22 + star.z * .34;
+        ctx.beginPath();
+        ctx.fillStyle = star.color ? `rgba(${star.color}, ${alpha})` : `rgba(244, 247, 255, ${alpha})`;
+        ctx.shadowColor = star.glow ? `rgba(${star.glow}, ${alpha})` : "transparent";
+        ctx.shadowBlur = star.tesseractBurst ? 24 * (1 - ageRatio) : 0;
+        ctx.globalCompositeOperation = star.tesseractBurst ? "lighter" : "source-over";
+        if (star.tesseractBurst) {
+          ctx.moveTo(star.x - star.vx * 2.6, star.y - star.vy * 2.6);
+          ctx.lineTo(star.x + star.vx * 1.6, star.y + star.vy * 1.6);
+          ctx.lineWidth = Math.max(1, star.z * .78);
+          ctx.strokeStyle = star.color ? `rgba(${star.color}, ${alpha * .72})` : `rgba(244, 247, 255, ${alpha * .72})`;
+          ctx.stroke();
+          ctx.beginPath();
+        }
+        ctx.arc(star.x, star.y, star.size || star.z, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        ctx.globalCompositeOperation = "source-over";
+      }
+      requestAnimationFrame(drawStars);
+    }
+
+    window.addEventListener("resize", resizeStars);
+    window.addEventListener("mousemove", (event) => {
+      pointer = { x: event.clientX, y: event.clientY };
+      cursorGlow.style.transform = `translate3d(${event.clientX - 210}px, ${event.clientY - 210}px, 0)`;
+      updateTesseractReady(event);
+      const nextTarget = {
+        x: Math.min(1, Math.max(0, event.clientX / window.innerWidth)),
+        y: Math.min(1, Math.max(0, event.clientY / window.innerHeight))
+      };
+      const deltaX = nextTarget.x - ruttTarget.x;
+      const deltaY = nextTarget.y - ruttTarget.y;
+      const deltaLength = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+      const now = performance.now();
+      if (deltaLength > .002 && now - lastWakeSampleAt > 28) {
+        wakeSamples.push({
+          x: nextTarget.x,
+          y: nextTarget.y,
+          dirX: deltaX / deltaLength,
+          dirY: deltaY / deltaLength,
+          age: 0,
+          strength: Math.min(1, deltaLength * 125)
+        });
+        if (wakeSamples.length > 24) wakeSamples.shift();
+        lastWakeSampleAt = now;
+      }
+      ruttTarget = nextTarget;
+      ruttEnergy = Math.min(1.4, ruttEnergy + .02);
+      if (!orbit || reducedMotion.matches) return;
+      const x = (event.clientX / window.innerWidth - .5) * 10;
+      const y = (event.clientY / window.innerHeight - .5) * -8;
+      orbit.style.transform = `rotateX(${y}deg) rotateY(${x}deg)`;
+    });
+    window.addEventListener("mouseleave", () => {
+      cursorGlow.style.opacity = ".18";
+    });
+    window.addEventListener("mouseenter", () => {
+      cursorGlow.style.opacity = ".65";
+    });
+
+    function triggerLogoShimmer(event) {
+      event?.stopPropagation();
+      if (!mageCore) return;
+      triggerRuttPulse(event, 1.2);
+      mageCore.classList.remove("is-shimmering");
+      void mageCore.offsetWidth;
+      mageCore.classList.add("is-shimmering");
+      emitTesseractBurst(event);
+      window.setTimeout(() => mageCore.classList.remove("is-shimmering"), 900);
+    }
+
+    function emitTesseractBurst(event) {
+      if (!tesseractHotspot || reducedMotion.matches) return;
+      const rect = tesseractHotspot.getBoundingClientRect();
+      const originX = event?.clientX || rect.left + rect.width * .5;
+      const originY = event?.clientY || rect.top + rect.height * .5;
+      const palette = ["0, 234, 255", "255, 27, 214", "214, 255, 47", "244, 247, 255"];
+      const now = performance.now();
+      stars.push(...Array.from({ length: 68 }, (_, index) => {
+        const angle = (index / 68) * Math.PI * 2 + (Math.random() - .5) * .52;
+        const speed = Math.random() * 8.2 + 4.2;
+        const color = palette[Math.floor(Math.random() * palette.length)];
+        return {
+          x: originX + (Math.random() - .5) * 10,
+          y: originY + (Math.random() - .5) * 10,
+          z: Math.random() * 1.55 + .7,
+          size: Math.random() * 3 + 1.35,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          driftVx: (Math.random() - .5) * .22,
+          driftVy: (Math.random() - .5) * .16,
+          born: now,
+          ttl: Math.random() * 420 + 860,
+          alpha: Math.random() * .24 + .76,
+          color,
+          glow: color,
+          burst: true,
+          tesseractBurst: true
+        };
+      }));
+      if (stars.length > 624) stars.splice(0, stars.length - 624);
+    }
+
+    function isNearTesseract(event, padding = 32) {
+      if (!tesseractHotspot) return false;
+      const rect = tesseractHotspot.getBoundingClientRect();
+      return (
+        event.clientX >= rect.left - padding &&
+        event.clientX <= rect.right + padding &&
+        event.clientY >= rect.top - padding &&
+        event.clientY <= rect.bottom + padding
+      );
+    }
+
+    function updateTesseractReady(event) {
+      mageCore?.classList.toggle("is-tesseract-ready", isNearTesseract(event));
+    }
+
+    tesseractHotspot?.addEventListener("click", triggerLogoShimmer);
+    tesseractHotspot?.addEventListener("pointerenter", () => mageCore?.classList.add("is-tesseract-ready"));
+    tesseractHotspot?.addEventListener("pointerleave", () => mageCore?.classList.remove("is-tesseract-ready"));
+    tesseractHotspot?.addEventListener("mouseenter", () => mageCore?.classList.add("is-tesseract-ready"));
+    tesseractHotspot?.addEventListener("mouseleave", () => mageCore?.classList.remove("is-tesseract-ready"));
+    tesseractHotspot?.addEventListener("focus", () => mageCore?.classList.add("is-tesseract-ready"));
+    tesseractHotspot?.addEventListener("blur", () => mageCore?.classList.remove("is-tesseract-ready"));
+    window.addEventListener("click", (event) => {
+      if (isNearTesseract(event, 18)) triggerLogoShimmer(event);
+    });
+
+    function triggerRuttPulse(event, strength = 1) {
+      if (!ruttPaths.length || reducedMotion.matches || proofModal?.open || cvModal?.open || imageLightbox?.open) return;
+      const x = event?.clientX ?? pointer.x;
+      const y = event?.clientY ?? pointer.y;
+      ruttTarget = {
+        x: Math.min(1, Math.max(0, x / window.innerWidth)),
+        y: Math.min(1, Math.max(0, y / window.innerHeight))
+      };
+      ruttEnergy = Math.min(1.75, Math.max(ruttEnergy, .88 + strength * .45));
+      ruttPulse = Math.min(1.4, Math.max(ruttPulse, strength));
+      ruttClickPulses.push({
+        x: ruttTarget.x,
+        y: ruttTarget.y,
+        born: performance.now(),
+        strength
+      });
+      if (ruttClickPulses.length > 6) ruttClickPulses.shift();
+    }
+
+    function drawRuttField(now) {
+      if (!ruttPaths.length) return;
+      const time = now * .001;
+      ruttClickPulses = ruttClickPulses.filter((pulse) => now - pulse.born < 900);
+      wakeSamples = wakeSamples
+        .map((sample) => ({
+          ...sample,
+          age: sample.age + 16.7,
+          strength: sample.strength * .986
+        }))
+        .filter((sample) => sample.age < 2100 && sample.strength > .04);
+      const followX = (ruttTarget.x - ruttPointer.x) * .18;
+      const followY = (ruttTarget.y - ruttPointer.y) * .18;
+      ruttPointer.x += followX;
+      ruttPointer.y += followY;
+      ruttVelocity.x = ruttVelocity.x * .91 + followX * .09;
+      ruttVelocity.y = ruttVelocity.y * .91 + followY * .09;
+      const pointerX = ruttPointer.x * 100;
+      const pointerY = ruttPointer.y * 100;
+      const velocityX = ruttVelocity.x * 100 * ruttScale.x;
+      const velocityY = ruttVelocity.y * 100 * ruttScale.y;
+      const velocityMagnitude = Math.sqrt(velocityX * velocityX + velocityY * velocityY);
+      const motion = Math.min(1, velocityMagnitude / .58);
+      if (velocityMagnitude > .001) {
+        wakeDirection.x = wakeDirection.x * .9 + (velocityX / velocityMagnitude) * .1;
+        wakeDirection.y = wakeDirection.y * .9 + (velocityY / velocityMagnitude) * .1;
+        const directionLength = Math.sqrt(wakeDirection.x * wakeDirection.x + wakeDirection.y * wakeDirection.y) || 1;
+        wakeDirection.x /= directionLength;
+        wakeDirection.y /= directionLength;
+      }
+      wakeMemory = Math.max(motion, wakeMemory * .994);
+      const wakeDrive = Math.max(motion, wakeMemory);
+      const directionX = wakeDirection.x;
+      const directionY = wakeDirection.y;
+      const pointCount = 88;
+      ruttPaths.forEach((path, lineIndex) => {
+        const baseY = -4 + lineIndex * 2.02;
+        const commands = [];
+        let lineHotness = 0;
+        for (let point = 0; point <= pointCount; point++) {
+          const x = point * (100 / pointCount);
+          const dx = x - pointerX;
+          const dy = baseY - pointerY;
+          const screenDx = dx * ruttScale.x;
+          const screenDy = dy * ruttScale.y;
+          const angle = Math.atan2(screenDy, screenDx);
+          const forward = screenDx * directionX + screenDy * directionY;
+          const behind = -forward;
+          const rawPerpendicular = screenDx * directionY - screenDy * directionX;
+          const liquidDrift = Math.sin(behind * .09 + Math.abs(rawPerpendicular) * .18 + time * 1.35) * (wakeDrive * 1.9)
+            + Math.sin(behind * .17 - time * .82 + lineIndex * .21) * (wakeDrive * .9);
+          const softPerpendicular = Math.abs(rawPerpendicular + liquidDrift);
+          const organicWarp = 1 + Math.sin(angle * 2.4 + time * .72) * .035 + Math.sin(angle * 4.7 - time * .48 + behind * .035) * .032;
+          const perpendicular = softPerpendicular;
+          const distance = Math.sqrt(screenDx * screenDx + screenDy * screenDy) * organicWarp;
+          const localPressure = Math.exp(-(distance * distance) / 120) * (.28 + wakeDrive * .5);
+          const bowWidth = 2.2 + Math.max(0, forward) * .38 + Math.sin(time * .9 + angle * 2) * .28;
+          const bowWave = motion
+            * (forward > 0 ? Math.exp(-forward / 11) : 0)
+            * Math.exp(-(perpendicular * perpendicular) / (bowWidth * bowWidth));
+          const wakeWidth = 3.4 + Math.max(0, behind) * .2 + Math.sin(behind * .08 - time * .9) * .38;
+          const wakeBody = wakeDrive
+            * (behind > 0 ? Math.exp(-behind / 56) : 0)
+            * Math.exp(-(perpendicular * perpendicular) / (wakeWidth * wakeWidth));
+          const wakeSlopeA = .21 + Math.sin(time * .42 + behind * .025) * .035;
+          const wakeSlopeB = .39 + Math.sin(time * .36 - behind * .022) * .045;
+          const wakeEdge = Math.min(
+            Math.abs(perpendicular - behind * wakeSlopeA),
+            Math.abs(perpendicular - behind * wakeSlopeB)
+          );
+          const wakeRidge = wakeDrive
+            * (behind > 0 ? Math.exp(-behind / 72) : 0)
+            * Math.exp(-(wakeEdge * wakeEdge) / 10);
+          const bowPhase = forward * .74 + perpendicular * .13 - time * 3.0 + Math.sin(angle * 2.6 + time * .55) * .28;
+          const wakePhase = behind * .38 + wakeEdge * .24 - time * 2.15 + Math.sin(perpendicular * .18 + time * .7) * .35;
+          const wakePhaseTwo = behind * .27 + perpendicular * .31 - time * 1.45 + Math.sin(behind * .04 - time * .5) * .45;
+          const bowRipple = Math.cos(bowPhase) * bowWave;
+          const wakeRipple = (Math.cos(wakePhase) * .72 + Math.sin(wakePhaseTwo) * .28) * (wakeBody * .34 + wakeRidge * .82);
+          const directionalHotness = Math.max(localPressure, bowWave * .78, wakeBody * .5, Math.max(0, wakeRidge) * .66);
+          let feedbackRipple = 0;
+          let feedbackHotness = 0;
+          let clickRipple = 0;
+          let clickHotness = 0;
+          for (const sample of wakeSamples) {
+            const sampleX = sample.x * 100;
+            const sampleY = sample.y * 100;
+            const sampleDx = (x - sampleX) * ruttScale.x;
+            const sampleDy = (baseY - sampleY) * ruttScale.y;
+            const sampleForward = sampleDx * sample.dirX + sampleDy * sample.dirY;
+            const sampleBehind = -sampleForward;
+            if (sampleBehind <= 0) continue;
+            const samplePerp = Math.abs(sampleDx * sample.dirY - sampleDy * sample.dirX);
+            const sampleAge = sample.age * .001;
+            const sampleWidth = 3.6 + sampleBehind * .24 + sampleAge * 3.4;
+            const sampleBody = sample.strength * Math.exp(-sampleBehind / (62 + sampleAge * 28)) * Math.exp(-(samplePerp * samplePerp) / (sampleWidth * sampleWidth));
+            const samplePhase = sampleBehind * .42 + samplePerp * .27 - time * 1.85 - sampleAge * 1.2;
+            feedbackRipple += Math.sin(samplePhase) * sampleBody * 1.62;
+            feedbackHotness = Math.max(feedbackHotness, sampleBody * .92);
+          }
+          for (const pulse of ruttClickPulses) {
+            const pulseAge = (now - pulse.born) * .001;
+            const pulseFade = Math.max(0, 1 - pulseAge / .9);
+            const pulseDx = (x - pulse.x * 100) * ruttScale.x;
+            const pulseDy = (baseY - pulse.y * 100) * ruttScale.y;
+            const pulseDistance = Math.sqrt(pulseDx * pulseDx + pulseDy * pulseDy);
+            const ringRadius = 4.2 + pulseAge * 42;
+            const ringWidth = 5.8 + pulseAge * 7.5;
+            const ringBody = pulse.strength * pulseFade * Math.exp(-((pulseDistance - ringRadius) * (pulseDistance - ringRadius)) / (ringWidth * ringWidth));
+            const innerBody = pulse.strength * pulseFade * Math.exp(-(pulseDistance * pulseDistance) / 72) * .24;
+            clickRipple += Math.sin((pulseDistance - ringRadius) * .74 - time * 4.2) * ringBody * 2.55 + innerBody;
+            clickHotness = Math.max(clickHotness, ringBody + innerBody);
+          }
+          const radialHotness = Math.max(directionalHotness, feedbackHotness, clickHotness);
+          lineHotness = Math.max(lineHotness, radialHotness);
+          const surfaceWave = Math.sin(x * .18 + lineIndex * .23 - time * .7) * .1 + Math.sin(x * .09 + baseY * .25 + time * .38) * .07;
+          const pulseLift = 1 + ruttPulse * .42;
+          const scanWave = surfaceWave + Math.sin(point * .38 + lineIndex * .16 + time * 1.4) * (.09 + ruttEnergy * .1 + ruttPulse * .04);
+          const centerPeak = localPressure * (1.36 + ruttEnergy * 1.12) * pulseLift;
+          const bowLift = bowRipple * (2.45 + ruttEnergy * 2.08) * pulseLift;
+          const trailingRipple = wakeRipple * (1.35 + ruttEnergy * 1.08) * pulseLift;
+          const y = baseY + scanWave - centerPeak - bowLift - trailingRipple - feedbackRipple - clickRipple;
+          commands.push(`${point === 0 ? "M" : "L"}${x.toFixed(2)} ${y.toFixed(2)}`);
+        }
+        path.setAttribute("d", commands.join(" "));
+        path.style.opacity = Math.min(.94, 0.18 + lineHotness * .54 + ruttEnergy * .08 + ruttPulse * .12).toFixed(3);
+        path.style.strokeWidth = (0.26 + lineHotness * .17 + ruttEnergy * .05 + ruttPulse * .08).toFixed(3);
+      });
+      ruttEnergy = Math.max(.24, ruttEnergy * .985);
+      ruttPulse *= .915;
+      requestAnimationFrame(drawRuttField);
+    }
+
+    window.addEventListener("click", (event) => {
+      if (event.target.closest("a, button, input, textarea, select")) return;
+      triggerRuttPulse(event, 1);
+      const now = performance.now();
+      stars.push(...Array.from({ length: 22 }, () => {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 5.8 + 4.2;
+        return {
+          x: event.clientX,
+          y: event.clientY,
+          z: Math.random() * 1.7 + .8,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          driftVx: (Math.random() - .5) * .184,
+          driftVy: Math.random() * .1265 + .02875,
+          born: now,
+          burst: true
+        };
+      }));
+      if (stars.length > 507) stars.splice(0, stars.length - 507);
+    });
+    resizeStars();
+    drawStars();
+    requestAnimationFrame(drawRuttField);
+
+    const videos = document.querySelectorAll("video");
+    videos.forEach((video) => {
+      video.addEventListener("mouseenter", () => video.play());
+      video.addEventListener("focus", () => video.play());
+    });
+  </script>
+</body>
+</html>
