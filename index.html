@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>:DATA/MAGE | Cyberpunk Visual Systems</title>
   <meta name="description" content=":DATA/MAGE builds concert visuals, motion graphics, laser programming, stage design, and immersive installations for artists, festivals, museums, and venues." />
-  <link rel="icon" type="image/png" href="assets/logos/DM_Android_logo.png?v=20260511b" />
+  <link rel="icon" type="image/png" href="assets/logos/DM_Android_logo.png" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -142,7 +142,7 @@
       inset: 0;
       z-index: 5;
       pointer-events: none;
-      background: url("assets/logos/DM_Android_logo_shimmer_lines.png?v=20260511b") center / 116% 116% no-repeat;
+      background: url("assets/logos/DM_Android_logo_shimmer_lines.png") center / 116% 116% no-repeat;
       filter:
         brightness(1.45)
         contrast(1.4)
@@ -559,7 +559,6 @@
       .hero-orbit { transition: none; }
     }
   </style>
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body class="scanlines font-mono antialiased">
   <canvas id="stars" class="starfield"></canvas>
@@ -573,15 +572,17 @@
       </div>
       <a href="#top" class="justify-self-start font-display text-xl font-bold tracking-normal text-signal md:justify-self-center">:DATA/<span class="text-cyan">MAGE</span></a>
       <div class="hidden justify-self-end items-center gap-7 text-sm font-semibold uppercase text-signal/66 md:flex">
+        <a class="hover:text-magenta" href="#shop">Shop</a>
         <a class="hover:text-cyan" href="#signal">Signal</a>
         <a class="hover:text-cyan" href="#intake">Contact</a>
       </div>
-      <a href="#intake" class="justify-self-end border border-phosphor/70 px-4 py-2 text-xs uppercase text-phosphor transition hover:bg-phosphor hover:text-void md:hidden">Contact</a>
+      <a href="#shop" class="justify-self-end border border-magenta/70 px-4 py-2 text-xs uppercase text-magenta transition hover:bg-magenta hover:text-void md:hidden">Shop</a>
     </nav>
   </header>
 
   <main id="top" class="relative z-10">
     <section class="relative min-h-screen overflow-hidden">
+      <video class="absolute inset-0 h-full w-full object-cover opacity-[.11] blur-[1px] mix-blend-screen" src="assets/GALACTIC%20JELLY.mov" autoplay muted loop playsinline></video>
       <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(143,67,255,.18),transparent_31rem),radial-gradient(circle_at_72%_68%,rgba(0,234,255,.10),transparent_24rem),linear-gradient(180deg,rgba(0,0,0,.58),#020203_95%)]"></div>
       <svg id="rutt-field" class="rutt-field" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
       <div class="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-center px-5 pb-14 pt-24 text-center">
@@ -592,7 +593,7 @@
           <div class="signal-line four"></div>
           <div class="signal-line five"></div>
           <div class="mage-core">
-            <img id="hero-logo" src="assets/logos/DM_Android_logo.png?v=20260511b" alt="DATA/MAGE android logo" />
+            <img id="hero-logo" src="assets/logos/DM_Android_logo.png" alt="DATA/MAGE android logo" />
             <button class="tesseract-hotspot" type="button" aria-label="Activate tesseract signal"></button>
           </div>
         </div>
@@ -635,7 +636,7 @@
       <div class="grid gap-4 lg:grid-cols-5">
         <article class="cyber-card neon-panel overflow-hidden bg-white/[.035] lg:col-span-3">
           <div class="relative aspect-video overflow-hidden bg-ink">
-            <img class="h-full w-full object-cover opacity-85" src="assets/artstation/live-visual-mixes.jpg?v=20260511b" alt="Visual Mixes and Music Videos cover" />
+            <img class="h-full w-full object-cover opacity-85" src="assets/artstation/live-visual-mixes.jpg" alt="Visual Mixes and Music Videos cover" />
             <div class="absolute inset-0 bg-gradient-to-t from-void via-transparent to-transparent"></div>
             <span class="absolute left-4 top-4 border border-magenta/60 bg-void/70 px-3 py-1 text-xs uppercase text-magenta">Music video / visuals</span>
           </div>
@@ -654,7 +655,7 @@
 
         <article class="cyber-card neon-panel overflow-hidden bg-white/[.035] lg:col-span-2">
           <div class="relative aspect-video overflow-hidden bg-ink">
-            <img id="featured-video-poster" class="h-full w-full object-cover opacity-85" src="assets/artstation/live-visual-mixes.jpg?v=20260511b" alt="Featured video proof" />
+            <img id="featured-video-poster" class="h-full w-full object-cover opacity-85" src="assets/artstation/live-visual-mixes.jpg" alt="Featured video proof" />
             <div class="absolute inset-0 bg-gradient-to-t from-void via-transparent to-transparent"></div>
             <span id="featured-video-badge" class="absolute left-4 top-4 border border-phosphor/60 bg-void/70 px-3 py-1 text-xs uppercase text-phosphor">Video proof</span>
           </div>
@@ -667,7 +668,7 @@
         </article>
 
         <article class="cyber-card overflow-hidden border border-white/12 bg-white/[.03] lg:col-span-2">
-          <img class="h-56 w-full object-cover" src="assets/artstation/live-lighting-videos.jpg?v=20260511b" alt="Live Lighting Videos cover" />
+          <img class="h-56 w-full object-cover" src="assets/artstation/live-lighting-videos.jpg" alt="Live Lighting Videos cover" />
           <div class="p-5">
             <p class="text-xs uppercase text-cyan">Live lighting videos</p>
             <h3 class="mt-3 font-display text-2xl text-signal">Ruel, Tobe Nwigwe, RHCP, NGHTMRE, Cashmere Cat</h3>
@@ -676,7 +677,7 @@
           </div>
         </article>
         <article class="cyber-card overflow-hidden border border-white/12 bg-white/[.03] lg:col-span-3">
-          <img class="h-56 w-full object-cover" src="assets/artstation/live-show-lighting.jpg?v=20260511b" alt="Live Show Lighting cover" />
+          <img class="h-56 w-full object-cover" src="assets/artstation/live-show-lighting.jpg" alt="Live Show Lighting cover" />
           <div class="p-5">
             <p class="text-xs uppercase text-magenta">Live show lighting</p>
             <h3 class="mt-3 font-display text-2xl text-signal">Tour, festival, projection, and laser credits</h3>
@@ -685,7 +686,7 @@
           </div>
         </article>
         <article class="cyber-card overflow-hidden border border-white/12 bg-white/[.03] lg:col-span-2">
-          <img class="h-56 w-full object-cover" src="assets/artstation/editing-fx.jpg?v=20260511b" alt="Editing and FX cover" />
+          <img class="h-56 w-full object-cover" src="assets/artstation/editing-fx.jpg" alt="Editing and FX cover" />
           <div class="p-5">
             <p class="text-xs uppercase text-phosphor">Editing / FX</p>
             <h3 class="mt-3 font-display text-2xl text-signal">Portraits, model work, self-image, and post treatment</h3>
@@ -694,7 +695,7 @@
           </div>
         </article>
         <article class="cyber-card overflow-hidden border border-white/12 bg-white/[.03] lg:col-span-3">
-          <img class="h-56 w-full object-cover" src="assets/artstation/digital-art-494-b05c0762-a4e0-4752-91ec-7205c5935d9a.jpg?v=20260511b" alt="Digital Art cover" />
+          <img class="h-56 w-full object-cover" src="assets/artstation/digital-art-494-b05c0762-a4e0-4752-91ec-7205c5935d9a.jpg" alt="Digital Art cover" />
           <div class="p-5">
             <p class="text-xs uppercase text-cyan">Digital art</p>
             <h3 class="mt-3 font-display text-2xl text-signal">Procedural worlds and screen-native artifacts</h3>
@@ -713,25 +714,25 @@
           <p class="mt-6 text-sm leading-7 text-signal/68">The show can feel unstable, reactive, and high-voltage on purpose. Behind it, the files, cues, routing, timing, and operator notes stay legible enough for the crew to trust.</p>
         </div>
         <div class="grid gap-3 sm:grid-cols-2">
-          <div class="border border-white/12 bg-void/55 p-6">
+          <div class="border border-cyan/40 bg-cyan/[.06] p-6">
             <p class="text-xs uppercase text-cyan">01</p>
-            <h3 class="mt-5 font-display text-2xl text-signal">Concert visual packages</h3>
-            <p class="mt-3 text-sm leading-6 text-signal/62">Loops, song moments, screen content, live VJ language, and artist-specific visual worlds.</p>
+            <h3 class="mt-5 font-display text-2xl text-signal">DJ &amp; performer visual packages</h3>
+            <p class="mt-3 text-sm leading-6 text-signal/62">Custom loop sets, reactive screen content, song-mapped moments, and a live VJ language built around your set — for touring DJs, electronic acts, and hybrid performers.</p>
           </div>
-          <div class="border border-white/12 bg-void/55 p-6">
+          <div class="border border-magenta/40 bg-magenta/[.06] p-6">
             <p class="text-xs uppercase text-magenta">02</p>
-            <h3 class="mt-5 font-display text-2xl text-signal">Laser and lighting design</h3>
-            <p class="mt-3 text-sm leading-6 text-signal/62">Programming, deployment planning, beam-safe visual rhythm, and stage looks for concerts and private events.</p>
+            <h3 class="mt-5 font-display text-2xl text-signal">Glitch edits &amp; content treatment</h3>
+            <p class="mt-3 text-sm leading-6 text-signal/62">Data-corrupt edits, analog noise overlays, datamosh treatments, and short-form visual content for studios, festivals, agencies, and social campaigns that need to feel dangerous.</p>
           </div>
           <div class="border border-white/12 bg-void/55 p-6">
             <p class="text-xs uppercase text-phosphor">03</p>
-            <h3 class="mt-5 font-display text-2xl text-signal">Immersive installations</h3>
-            <p class="mt-3 text-sm leading-6 text-signal/62">Interactive environments, projection studies, sensor-driven rooms, and festival or museum-ready experiences.</p>
+            <h3 class="mt-5 font-display text-2xl text-signal">Concert &amp; festival stage systems</h3>
+            <p class="mt-3 text-sm leading-6 text-signal/62">Laser programming, lighting design, projection mapping, and full stage visual systems for concerts, festivals, and immersive venues.</p>
           </div>
           <div class="border border-white/12 bg-void/55 p-6">
             <p class="text-xs uppercase text-cyan">04</p>
-            <h3 class="mt-5 font-display text-2xl text-signal">Motion graphics</h3>
-            <p class="mt-3 text-sm leading-6 text-signal/62">Titles, social cuts, content systems, branding motion, and campaign visuals with a harder signal.</p>
+            <h3 class="mt-5 font-display text-2xl text-signal">VJ loop packs</h3>
+            <p class="mt-3 text-sm leading-6 text-signal/62">Production-ready loops for Resolume, VDMX, and TouchDesigner — BPM-tagged, alpha-channel where it counts. <a href="#shop" class="text-magenta underline decoration-magenta/40 underline-offset-4 hover:text-phosphor">Browse the store →</a></p>
           </div>
         </div>
       </div>
@@ -754,21 +755,105 @@
     </section>
 
     <section id="clients" class="mx-auto max-w-7xl px-5 pb-20">
-      <div class="grid gap-4 md:grid-cols-3">
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="border border-magenta/35 bg-magenta/[.07] p-6">
+          <p class="text-xs uppercase text-magenta">DJs &amp; performers</p>
+          <h3 class="mt-8 font-display text-3xl text-signal">Visuals that hit as hard as the drop.</h3>
+          <p class="mt-4 text-sm leading-7 text-signal/66">Custom loop sets, reactive screen content, and full VJ packages for electronic acts, hybrid performers, and touring DJs.</p>
+        </div>
         <div class="border border-cyan/25 bg-cyan/10 p-6">
-          <p class="text-xs uppercase text-cyan">Artists</p>
-          <h3 class="mt-8 font-display text-3xl text-signal">A visual identity that can perform live.</h3>
-          <p class="mt-4 text-sm leading-7 text-signal/66">For tours, one-off shows, releases, and content packages that need to feel unmistakably yours.</p>
+          <p class="text-xs uppercase text-cyan">Artists &amp; studios</p>
+          <h3 class="mt-8 font-display text-3xl text-signal">A visual identity that performs live.</h3>
+          <p class="mt-4 text-sm leading-7 text-signal/66">Glitch edits, content treatment, and campaign visuals for releases, tours, and social that need to feel unmistakably yours.</p>
         </div>
         <div class="border border-phosphor/25 bg-phosphor/10 p-6">
           <p class="text-xs uppercase text-phosphor">Festivals</p>
           <h3 class="mt-8 font-display text-3xl text-signal">Installations people walk toward.</h3>
           <p class="mt-4 text-sm leading-7 text-signal/66">Programmable moments, stage support, projection environments, and media systems built for flow.</p>
         </div>
-        <div class="border border-magenta/25 bg-magenta/10 p-6">
-          <p class="text-xs uppercase text-magenta">Museums and venues</p>
-          <h3 class="mt-8 font-display text-3xl text-signal">Digital work that holds a room.</h3>
-          <p class="mt-4 text-sm leading-7 text-signal/66">Immersive, interactive, and spatial concepts with enough technical clarity to move from sketch to install.</p>
+        <div class="border border-white/20 bg-white/[.035] p-6">
+          <p class="text-xs uppercase text-signal/50">Any setup</p>
+          <h3 class="mt-8 font-display text-3xl text-signal">Ready-to-drop loop packs.</h3>
+          <p class="mt-4 text-sm leading-7 text-signal/66">Pre-built packs for Resolume, VDMX, and TouchDesigner. <a href="#shop" class="text-magenta underline decoration-magenta/40 underline-offset-4 hover:text-phosphor">Browse the store →</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="shop" class="border-y border-white/10 bg-white/[.035]">
+      <div class="mx-auto max-w-7xl px-5 py-20">
+        <p class="text-xs uppercase text-magenta">VJ Loop Packs</p>
+        <h2 class="mt-3 font-display text-4xl font-bold text-signal md:text-6xl">Drop it in Resolume. Done.</h2>
+        <p class="mt-5 max-w-2xl text-sm leading-7 text-signal/68">Production-ready loop packs built for Resolume Arena, VDMX, and TouchDesigner. BPM-tagged, alpha-channel where it matters, tested night-of on real rigs.</p>
+
+        <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+
+          <!-- PACK 01 — update href to your Gumroad product link -->
+          <div class="cyber-card border border-white/12 bg-void/70 overflow-hidden flex flex-col">
+            <div class="aspect-video bg-void flex items-center justify-center border-b border-magenta/20" style="background:linear-gradient(135deg,#0a000f 0%,#1a002a 50%,#0d0005 100%)">
+              <span class="font-mono text-xs uppercase text-magenta/40 tracking-widest">SIGNAL//DECAY</span>
+            </div>
+            <div class="p-6 flex flex-col flex-1">
+              <p class="text-xs uppercase text-magenta font-mono">Pack 001</p>
+              <h3 class="mt-2 font-display text-2xl text-signal">SIGNAL//DECAY</h3>
+              <p class="mt-3 text-xs leading-6 text-signal/60 flex-1">Glitch, data-corrupt, and analog noise loops. Hard edges, broken signals, VHS bleed. Built for peak-hour techno and industrial sets. 40 clips · 1080p · ProRes + H.264 · 120 / 140 / 160 BPM markers.</p>
+              <div class="mt-5 flex items-center justify-between border-t border-white/10 pt-4">
+                <span class="font-display text-2xl text-phosphor">$29</span>
+                <a href="#" class="proof-trigger magenta">Get the pack</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- PACK 02 — update href to your Gumroad product link -->
+          <div class="cyber-card border border-white/12 bg-void/70 overflow-hidden flex flex-col">
+            <div class="aspect-video bg-void flex items-center justify-center border-b border-cyan/20" style="background:linear-gradient(135deg,#000a12 0%,#001a22 50%,#00080f 100%)">
+              <span class="font-mono text-xs uppercase text-cyan/40 tracking-widest">VOID ARCHITECTURE</span>
+            </div>
+            <div class="p-6 flex flex-col flex-1">
+              <p class="text-xs uppercase text-cyan font-mono">Pack 002</p>
+              <h3 class="mt-2 font-display text-2xl text-signal">VOID ARCHITECTURE</h3>
+              <p class="mt-3 text-xs leading-6 text-signal/60 flex-1">Dark structural geometry, minimal signal forms, and deep-space motion. Built for ambient, drone, and atmospheric electronic sets. 35 clips · 1080p · ProRes + H.264 · tempo-flexible.</p>
+              <div class="mt-5 flex items-center justify-between border-t border-white/10 pt-4">
+                <span class="font-display text-2xl text-phosphor">$24</span>
+                <a href="#" class="proof-trigger">Get the pack</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- PACK 03 — update href to your Gumroad product link -->
+          <div class="cyber-card border border-white/12 bg-void/70 overflow-hidden flex flex-col">
+            <div class="aspect-video bg-void flex items-center justify-center border-b border-phosphor/20" style="background:linear-gradient(135deg,#080a00 0%,#161a00 50%,#060800 100%)">
+              <span class="font-mono text-xs uppercase text-phosphor/40 tracking-widest">CHROMATIC SURGE</span>
+            </div>
+            <div class="p-6 flex flex-col flex-1">
+              <p class="text-xs uppercase text-phosphor font-mono">Pack 003</p>
+              <h3 class="mt-2 font-display text-2xl text-signal">CHROMATIC SURGE</h3>
+              <p class="mt-3 text-xs leading-6 text-signal/60 flex-1">High-energy neon bursts, colour sweeps, and reactive light forms for house, bass, and festival main-stage sets. 45 clips · 1080p · ProRes + H.264 · 124 / 128 / 138 BPM markers.</p>
+              <div class="mt-5 flex items-center justify-between border-t border-white/10 pt-4">
+                <span class="font-display text-2xl text-phosphor">$34</span>
+                <a href="#" class="proof-trigger phosphor">Get the pack</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Bundle CTA -->
+        <div class="mt-5 cyber-card border border-magenta/40 bg-magenta/[.06] p-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p class="text-xs uppercase text-magenta font-mono">Full bundle — all three packs</p>
+            <p class="mt-2 font-display text-3xl text-signal">Every pack. One download. <span class="text-phosphor">$69</span></p>
+            <p class="mt-1 text-xs text-signal/55">Save $18 vs. buying individually.</p>
+          </div>
+          <a href="#" class="proof-trigger magenta flex-shrink-0 text-sm px-6 py-3">Get the bundle</a>
+        </div>
+
+        <!-- Custom work bridge -->
+        <div class="mt-5 border border-cyan/20 bg-cyan/[.04] p-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p class="text-xs uppercase text-cyan">Need something custom?</p>
+            <p class="mt-2 text-sm text-signal/68">Artist-specific loops, branded visual systems, or a full set built around your stage setup and setlist.</p>
+          </div>
+          <a href="#intake" class="proof-trigger flex-shrink-0">Get a quote</a>
         </div>
       </div>
     </section>
@@ -778,7 +863,7 @@
         <div class="signal-intake-panel p-6 md:p-8">
           <p class="text-xs font-semibold uppercase text-cyan">Project intake</p>
           <h2 class="mt-3 font-display text-4xl font-bold md:text-6xl">Make the phone ring. Make the room sing.</h2>
-          <p class="mt-6 max-w-xl text-sm leading-7 text-signal/70">First-pass intake for artists, festivals, museums, and production teams: audience, room, deadline, deliverables, tech constraints, and the emotional voltage the project needs.</p>
+          <p class="mt-6 max-w-xl text-sm leading-7 text-signal/70">First-pass intake for artists, festivals, museums, and production teams: audience, room, deadline, deliverables, tech constraints, and the emotional voltage the project needs. The fastest paid starting point is a $500 visual concept sprint: direction, references, technical path, and a next-step production range.</p>
           <div class="mt-8 border border-magenta/30 bg-magenta/10 p-4 text-xs leading-6 text-signal/76">
             <strong>Asset request:</strong> final reel clips, project stills, client logos, artist credits, installation photos, press quotes, and any show documentation that proves scale.
           </div>
@@ -792,8 +877,12 @@
           </div>
           <label class="grid gap-2 text-xs uppercase text-cyan">Project type
             <select name="project_type" class="signal-input px-4 py-3 text-sm normal-case">
+              <option>DJ / performer visual package</option>
+              <option>Glitch edit / content treatment</option>
+              <option>Custom VJ loop pack</option>
               <option>Concert visuals / VJ package</option>
               <option>Festival installation</option>
+              <option>Paid visual concept sprint ($500)</option>
               <option>Museum or immersive venue installation</option>
               <option>Laser / lighting / stage design</option>
               <option>Motion graphics or campaign content</option>
@@ -807,7 +896,6 @@
             <textarea name="brief" rows="5" required class="signal-input px-4 py-3 text-sm normal-case" placeholder="Audience, venue, deliverables, technical constraints, and the feeling people should leave with."></textarea>
           </label>
           <p class="text-xs leading-5 text-signal/58">By sending this intake, you agree that DATA/MAGE may use the details you provide to respond about your project. See <a class="text-cyan underline decoration-cyan/40 underline-offset-4 hover:text-phosphor" href="privacy.html">privacy notes</a>.</p>
-          <div class="cf-turnstile" data-sitekey="PASTE_TURNSTILE_SITEKEY_HERE" data-theme="dark"></div>
           <button class="border border-phosphor/70 bg-phosphor/10 px-6 py-4 text-left font-display text-lg font-bold text-phosphor transition hover:bg-phosphor hover:text-void" type="submit">Start the transmission</button>
           <p id="intake-status" class="intake-status text-xs uppercase" role="status" aria-live="polite"></p>
         </form>
@@ -984,8 +1072,10 @@
         copy: "Analog and digital VFX, studio liaison work, projection, lighting, animation, artwork, livestream visuals, and live editing collected as a fast-read proof packet.",
         credits: ["Paul Wall - Platinum Playa", "Paul Wall - Love 4 Rent", "Paul Wall x Z-Ro - Swang Down", "Glass Beams - Mirage"],
         media: [
-          { type: "image", src: "assets/artstation/live-visual-mixes.jpg?v=20260511b", alt: "Visual Mixes and Music Videos cover" },
-          ...artstationVideoProof.visualMixes
+          { type: "image", src: "assets/artstation/live-visual-mixes.jpg", alt: "Visual Mixes and Music Videos cover" },
+          ...artstationVideoProof.visualMixes,
+          { type: "video", src: "assets/Chromatose-Video.mov", label: "Chromatose motion texture" },
+          { type: "video", src: "assets/Collage%20flip.mov", label: "Collage flip motion study" }
         ]
       },
       "platinum-playa": {
@@ -1006,7 +1096,7 @@
           {
             type: "embed",
             src: "https://www.youtube-nocookie.com/embed/lnzQT9zSij0?rel=0",
-            poster: "assets/artstation/live-visual-mixes.jpg?v=20260511b",
+            poster: "assets/artstation/live-visual-mixes.jpg",
             title: "Paul Wall - Platinum Playa",
             label: "Analog/digital VFX and studio liaison"
           }
@@ -1019,8 +1109,9 @@
         copy: "Lighting design, lighting direction, live visuals, tech work, and festival-scale stage execution grouped for bookers and production teams.",
         credits: ["Lighting design", "Lighting direction", "Live visuals", "Festival execution"],
         media: [
-          { type: "image", src: "assets/artstation/live-lighting-videos.jpg?v=20260511b", alt: "Live Lighting Videos cover" },
-          ...artstationVideoProof.lightingVideos
+          { type: "image", src: "assets/artstation/live-lighting-videos.jpg", alt: "Live Lighting Videos cover" },
+          ...artstationVideoProof.lightingVideos,
+          { type: "video", src: "assets/The%20Party%204k.mov", label: "The Party 4K visual loop" }
         ]
       },
       "show-lighting": {
@@ -1030,7 +1121,8 @@
         copy: "Union is Creation immersive sound bath, RHCP Unlimited Love World Tour tech work, Ruel stage design, Greyday laser/visual work, projection mapping, Electric Zoo, Jai Wolf, and Cashmere Cat festival dates.",
         credits: ["Tour tech", "Laser and visual work", "Projection mapping", "Immersive sound bath"],
         media: [
-          { type: "image", src: "assets/artstation/live-show-lighting.jpg?v=20260511b", alt: "Live Show Lighting cover" }
+          { type: "image", src: "assets/artstation/live-show-lighting.jpg", alt: "Live Show Lighting cover" },
+          { type: "video", src: "assets/GALACTIC%20JELLY.mov", label: "Galactic Jelly visual loop" }
         ]
       },
       "editing-fx": {
@@ -1040,7 +1132,8 @@
         copy: "A visual texture bank for campaign treatments, artist identity, social cuts, and experimental direction.",
         credits: ["Portrait editing", "Model work", "Post treatment", "Campaign textures"],
         media: [
-          { type: "image", src: "assets/artstation/editing-fx.jpg?v=20260511b", alt: "Editing and FX cover" }
+          { type: "image", src: "assets/artstation/editing-fx.jpg", alt: "Editing and FX cover" },
+          { type: "video", src: "assets/Comic%20melty%20mountains.mp4", label: "Comic melty mountains motion piece" }
         ]
       },
       "digital-art": {
@@ -1050,7 +1143,8 @@
         copy: "Still-image worldbuilding and screen-native motion studies that support the brand's glitch, multimedia, CRT, and synthetic-light instincts.",
         credits: ["Procedural worlds", "CRT texture", "Synthetic light", "Motion studies"],
         media: [
-          { type: "image", src: "assets/artstation/digital-art-494-b05c0762-a4e0-4752-91ec-7205c5935d9a.jpg?v=20260511b", alt: "Digital Art cover" }
+          { type: "image", src: "assets/artstation/digital-art-494-b05c0762-a4e0-4752-91ec-7205c5935d9a.jpg", alt: "Digital Art cover" },
+          { type: "video", src: "assets/Chromatose-Video.mov", label: "Chromatose motion texture" }
         ]
       }
     };
@@ -1137,7 +1231,7 @@
       }
     }
 
-    function posterForEmbed(src = "", fallback = "assets/artstation/live-visual-mixes.jpg?v=20260511b") {
+    function posterForEmbed(src = "", fallback = "assets/artstation/live-visual-mixes.jpg") {
       try {
         const url = new URL(src);
         if (url.hostname.includes("youtube")) {
@@ -1237,7 +1331,7 @@
         if (!videos.length) return;
         const selected = videos[Math.floor(Math.random() * videos.length)];
         const caption = selected.label && selected.label !== selected.title ? selected.label : selected.projectTitle;
-        featuredVideoPoster.src = selected.poster || posterForEmbed(selected.src, selected.projectTitle === "Live Lighting Videos" ? "assets/artstation/live-lighting-videos.jpg?v=20260511b" : "assets/artstation/live-visual-mixes.jpg?v=20260511b");
+        featuredVideoPoster.src = selected.poster || posterForEmbed(selected.src, selected.projectTitle === "Live Lighting Videos" ? "assets/artstation/live-lighting-videos.jpg" : "assets/artstation/live-visual-mixes.jpg");
         featuredVideoPoster.alt = selected.title;
         featuredVideoBadge.textContent = selected.projectTitle;
         featuredVideoTitle.textContent = selected.title;
