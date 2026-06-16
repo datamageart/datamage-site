@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Crew | :DATA/MAGE</title>
+  <meta name="description" content="Meet the DATA/MAGE crew — designers, technicians, and artists building live visual systems for concerts, festivals, and immersive installations." />
+  <link rel="icon" type="image/png" href="assets/logos/DM_Android_logo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            void: "#050507",
+            ink: "#0b0d12",
+            phosphor: "#c8ff00",
+            magenta: "#ff1bd6",
+            cyan: "#00eaff",
+            violet: "#8f43ff",
+            signal: "#f4f7ff"
+          },
+          fontFamily: {
+            display: ["Space Grotesk", "Inter", "Arial", "sans-serif"],
+            mono: ["IBM Plex Mono", "Consolas", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root { color-scheme: dark; --hero-accent: #ff1bd6; --hero-secondary: #00eaff; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body {
+      background:
+        linear-gradient(90deg, rgba(255, 27, 214, .07) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(0, 234, 255, .05) 1px, transparent 1px),
+        radial-gradient(circle at 16% 11%, rgba(0, 234, 255, .20), transparent 28rem),
+        radial-gradient(circle at 82% 0%, rgba(255, 27, 214, .18), transparent 27rem),
+        linear-gradient(180deg, #020203 0%, #07000d 44%, #030306 100%);
+      background-size: 80px 80px, 80px 80px, auto, auto, auto;
+      color: #f7f0df;
+      overflow-x: hidden;
+    }
+    .scanlines::after {
+      content: "";
+      position: fixed; inset: 0; pointer-events: none; z-index: 60;
+      background: repeating-linear-gradient(180deg, rgba(255,255,255,.04) 0 1px, transparent 1px 4px);
+      mix-blend-mode: overlay; opacity: .24;
+    }
+    .glitch { text-shadow: 2px 0 #ff2bd6, -2px 0 #12f7ff; }
+    .neon-panel { box-shadow: 0 0 0 1px rgba(0, 234, 255, .24), 0 0 32px rgba(255, 27, 214, .13); }
+    .cyber-card { clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px)); }
+    .starfield { position: fixed; inset: 0; z-index: 18; pointer-events: none; opacity: .86; }
+    .cursor-glow {
+      position: fixed; left: 0; top: 0; width: 420px; height: 420px; z-index: 2;
+      pointer-events: none; border-radius: 50%;
+      background: radial-gradient(circle, color-mix(in srgb, var(--hero-accent) 18%, transparent), transparent 64%);
+      transform: translate3d(-50%, -50%, 0); opacity: .65; mix-blend-mode: screen; transition: opacity .2s ease;
+    }
+    .proof-trigger {
+      position: relative; z-index: 24; display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(0, 234, 255, .56); color: rgb(0, 234, 255); background: rgba(0, 234, 255, .05);
+      padding: .65rem 1rem; font-size: .75rem; text-transform: uppercase; text-decoration: none;
+      transition: background .18s ease, color .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    .proof-trigger:hover, .proof-trigger:focus-visible {
+      background: rgb(0, 234, 255); border-color: rgb(0, 234, 255); color: rgb(2, 2, 3);
+      box-shadow: 0 0 22px rgba(0, 234, 255, .24); outline: none;
+    }
+    .proof-trigger.magenta { border-color: rgba(255, 27, 214, .56); color: rgb(255, 27, 214); background: rgba(255, 27, 214, .05); }
+    .proof-trigger.magenta:hover, .proof-trigger.magenta:focus-visible {
+      background: rgb(255, 27, 214); border-color: rgb(255, 27, 214); color: rgb(2, 2, 3);
+      box-shadow: 0 0 22px rgba(255, 27, 214, .24);
+    }
+    .proof-trigger.phosphor { border-color: rgba(214, 255, 47, .56); color: rgb(214, 255, 47); background: rgba(214, 255, 47, .05); }
+    .proof-trigger.phosphor:hover, .proof-trigger.phosphor:focus-visible {
+      background: rgb(214, 255, 47); border-color: rgb(214, 255, 47); color: rgb(2, 2, 3);
+      box-shadow: 0 0 22px rgba(214, 255, 47, .2);
+    }
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 234, 255, .4), rgba(255, 27, 214, .3), transparent);
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body class="scanlines font-mono antialiased">
+  <canvas id="stars" class="starfield"></canvas>
+  <div id="cursor-glow" class="cursor-glow"></div>
+
+  <header class="fixed inset-x-0 top-0 z-30 bg-gradient-to-b from-void/80 to-transparent">
+    <nav class="mx-auto grid max-w-7xl grid-cols-3 items-center px-5 py-5">
+      <div class="hidden items-center gap-7 text-sm font-semibold uppercase text-signal/66 md:flex">
+        <a class="hover:text-cyan" href="index.html#work">Work</a>
+        <a class="hover:text-cyan" href="index.html#press">Press</a>
+        <a class="hover:text-cyan" href="index.html#installs">Installs</a>
+        <a class="text-cyan" href="team.html">Team</a>
+      </div>
+      <a href="index.html" class="justify-self-start font-display text-xl font-bold tracking-normal text-signal md:justify-self-center">:DATA/<span class="text-cyan">MAGE</span></a>
+      <div class="hidden justify-self-end items-center gap-7 text-sm font-semibold uppercase text-signal/66 md:flex">
+        <a class="hover:text-cyan" href="index.html#signal">Signal</a>
+        <a class="hover:text-cyan" href="index.html#intake">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="relative z-10 pt-28">
+
+    <!-- Page hero -->
+    <section class="mx-auto max-w-7xl px-5 pb-16">
+      <p class="text-xs uppercase text-cyan">DATA/MAGE crew</p>
+      <h1 class="glitch mt-3 font-display text-5xl font-bold leading-none text-signal md:text-7xl">The crew.</h1>
+      <p class="mt-6 max-w-2xl text-sm leading-7 text-signal/68">Designers, lighting directors, laserists, and technicians who build the systems that make rooms behave. Every show, every scale.</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Kilian Holt -->
+    <section id="kilian" class="mx-auto max-w-7xl px-5 py-20 scroll-mt-24">
+      <div class="grid gap-10 lg:grid-cols-[320px_1fr]">
+
+        <!-- Photo + identity -->
+        <div class="flex flex-col gap-5">
+          <div class="cyber-card neon-panel overflow-hidden" style="aspect-ratio:3/4;max-height:380px">
+            <img src="assets/kilian-profile.jpg" alt="Kilian Holt" class="w-full h-full object-cover object-top" style="filter:saturate(1.18) contrast(1.08) brightness(.94)" />
+          </div>
+          <div>
+            <h2 class="font-display text-3xl font-bold text-signal">Kilian Holt</h2>
+            <p class="mt-1 text-xs uppercase text-magenta">Creative Director</p>
+            <p class="mt-4 text-sm leading-7 text-signal/72">Digital artist, laser designer, stage designer, and lighting director with 16 years of professional experience in live events.</p>
+          </div>
+          <div class="border border-white/10 bg-white/[.025] p-4">
+            <p class="text-xs uppercase text-cyan">Core skills</p>
+            <div class="mt-3 flex flex-wrap gap-2 text-xs uppercase text-signal/68">
+              <span class="border border-white/12 px-2 py-1">Lighting</span>
+              <span class="border border-white/12 px-2 py-1">Visual effects</span>
+              <span class="border border-white/12 px-2 py-1">Pre-viz</span>
+              <span class="border border-white/12 px-2 py-1">Video editing</span>
+              <span class="border border-white/12 px-2 py-1">Photo editing</span>
+              <span class="border border-white/12 px-2 py-1">Stage design</span>
+              <span class="border border-white/12 px-2 py-1">Live visuals</span>
+              <span class="border border-white/12 px-2 py-1">Algorithmic art</span>
+              <span class="border border-white/12 px-2 py-1">Lasers</span>
+              <span class="border border-white/12 px-2 py-1">SFX / cryo</span>
+              <span class="border border-white/12 px-2 py-1">LED tech</span>
+            </div>
+          </div>
+          <div class="border border-white/10 bg-white/[.025] p-4">
+            <p class="text-xs uppercase text-magenta">Software / systems</p>
+            <p class="mt-3 text-xs leading-6 text-signal/64">GRAND MA2 &amp; MA3 · After Effects · Illustrator · Photoshop · MA3d · Resolume Arena · TouchDesigner · MadMapper · Synesthesia · Pangolin Beyond · OBS · microdosevr · Radiator Laser Synth · NDI · Cinema 4D · Avolites · Chamsys · MADRIX · HOG Systems · Agentic AI systems · Custom analog video systems</p>
+          </div>
+          <a href="index.html#intake" class="proof-trigger magenta">Start a project</a>
+        </div>
+
+        <!-- Credits -->
+        <div class="grid gap-6 content-start">
+          <div class="cyber-card border border-cyan/25 bg-cyan/[.06] p-6">
+            <p class="text-xs uppercase text-cyan">Touring credits</p>
+            <div class="mt-5 grid gap-3 text-sm leading-6 text-signal/72 sm:grid-cols-2">
+              <div class="flex items-start gap-3">
+                <span class="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-cyan/60"></span>
+                <span>Tobe Nwigwe — lighting designer</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-cyan/60"></span>
+                <span>Red Hot Chili Peppers — lighting tech</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-cyan/60"></span>
+                <span>Ruel — lighting designer</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-cyan/60"></span>
+                <span>$uicideboy$ — laserist, visual artist</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-cyan/60"></span>
+                <span>Arijit Singh — laserist</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-cyan/60"></span>
+                <span>Tetrarch — lighting designer</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-cyan/60"></span>
+                <span>Normani — lighting operator</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-cyan/60"></span>
+                <span>Cashmere Cat — lighting designer</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-cyan/60"></span>
+                <span>Snakehips — lighting designer, VJ, visual artist</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-cyan/60"></span>
+                <span>Cheat Codes — lighting designer, VJ, visual artist</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-cyan/60"></span>
+                <span>Jauz — lighting tech</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-cyan/60"></span>
+                <span>Jai Wolf — lighting tech, laser tech, SFX tech</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-cyan/60"></span>
+                <span>Butcher Babies — lighting designer</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="cyber-card border border-magenta/25 bg-magenta/[.04] p-6">
+            <p class="text-xs uppercase text-magenta">Festival &amp; venue credits</p>
+            <div class="mt-5 grid gap-3 text-sm leading-6 text-signal/72 sm:grid-cols-2">
+              <div class="flex items-start gap-3">
+                <span class="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-magenta/60"></span>
+                <span>Upward Artistry — production director</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-magenta/60"></span>
+                <span>Blaq Lotus Studios — installation director, designer, content designer</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-magenta/60"></span>
+                <span>Gateway Productions — lighting tech, video tech, lighting operator</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-magenta/60"></span>
+                <span>Electric Zoo 2019 — lighting director, AMF Stage</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-magenta/60"></span>
+                <span>Day For Night 2015–2017 — art side production manager</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-magenta/60"></span>
+                <span>In Bloom 2018 — lighting tech</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-magenta/60"></span>
+                <span>Houston Whatever Fest 2015–2017 — lighting designer</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-magenta/60"></span>
+                <span>White Oak Music Hall 2016–2018 — lighting department head</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-magenta/60"></span>
+                <span>Warehouse Live 2015–2016 — lighting department head</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="mt-1 block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-magenta/60"></span>
+                <span>Numb3rs Nightclub 2014–2015 — lighting designer</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="cyber-card border border-phosphor/25 bg-phosphor/[.04] p-6">
+            <p class="text-xs uppercase text-phosphor">Press</p>
+            <div class="mt-4 grid gap-4">
+              <div>
+                <p class="text-xs uppercase text-phosphor/70">Soundhaven — May 2021</p>
+                <p class="mt-1 text-sm leading-6 text-signal/72">"It Is Mathematically Impossible to Replicate Kilian Holt, the Photon Samurai."</p>
+                <a href="https://www.soundhavenofficial.com/post/fact-it-is-mathematically-impossible-to-replicate-kilian-holt-the-photon-samurai" target="_blank" rel="noreferrer" class="proof-trigger mt-3 self-start text-xs">Read profile</a>
+              </div>
+              <div class="border-t border-white/10 pt-4">
+                <p class="text-xs uppercase text-phosphor/70">Beyond the Bass — Jun 2026</p>
+                <p class="mt-1 text-sm leading-6 text-signal/72">In-depth interview: Illfest 2026 activation, live visual systems, and festival-scale production.</p>
+                <a href="https://beyondthebass.substack.com/p/0e73cc82-8b53-4568-96e8-e3681e61c022" target="_blank" rel="noreferrer" class="proof-trigger mt-3 self-start text-xs">Read interview</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Additional crew placeholder -->
+    <section class="mx-auto max-w-7xl px-5 py-20">
+      <p class="text-xs uppercase text-signal/40">More crew profiles coming</p>
+      <p class="mt-3 text-sm leading-7 text-signal/50 max-w-lg">Additional team members, collaborators, and crew bios will be added here as the roster grows.</p>
+    </section>
+
+    <!-- CTA -->
+    <section class="border-t border-white/10 bg-white/[.025] px-5 py-14">
+      <div class="mx-auto flex max-w-7xl flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p class="text-xs uppercase text-signal/50">Work with us</p>
+          <p class="mt-2 font-display text-2xl text-signal">Bring the crew into your next project.</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href="index.html#work" class="proof-trigger">Portfolio</a>
+          <a href="index.html#installs" class="proof-trigger magenta">Installs</a>
+          <a href="index.html#intake" class="proof-trigger phosphor">Start a project</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="relative z-10 border-t border-white/10 px-5 py-8 text-xs text-signal/55">
+    <div class="mx-auto flex max-w-7xl flex-col justify-between gap-3 sm:flex-row">
+      <p>:DATA/MAGE - creative visual systems</p>
+      <p>Concerts / festivals / museums / immersive venues</p>
+    </div>
+  </footer>
+
+  <script>
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    const cursorGlow = document.getElementById("cursor-glow");
+    let stars = [];
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    function initStars() {
+      stars = [];
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const count = Math.floor((canvas.width * canvas.height) / 5800);
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.1 + 0.2,
+          o: Math.random() * 0.6 + 0.2,
+          speed: Math.random() * 0.012 + 0.004
+        });
+      }
+    }
+
+    function drawStars(t) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(s => {
+        s.o = 0.22 + Math.abs(Math.sin(t * s.speed + s.x)) * 0.62;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(244,247,255,${s.o.toFixed(2)})`;
+        ctx.fill();
+      });
+    }
+
+    function loop(t = 0) {
+      if (!reducedMotion.matches) drawStars(t / 1000);
+      requestAnimationFrame(loop);
+    }
+
+    document.addEventListener("mousemove", e => {
+      cursorGlow.style.transform = `translate3d(${e.clientX}px,${e.clientY}px,0) translate(-50%,-50%)`;
+    });
+
+    window.addEventListener("resize", initStars);
+    initStars();
+    loop();
+  </script>
+</body>
+</html>
