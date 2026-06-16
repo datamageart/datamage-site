@@ -3,17 +3,25 @@
   <url>
     <loc>https://datamage.art/</loc>
     <priority>1.0</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-06-16</lastmod>
   </url>
   <url>
-    <loc>https://datamage.art/#work</loc>
-    <priority>0.8</priority>
+    <loc>https://datamage.art/team.html</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-06-16</lastmod>
   </url>
   <url>
-    <loc>https://datamage.art/#intake</loc>
-    <priority>0.8</priority>
+    <loc>https://datamage.art/installs/illfest-2026.html</loc>
+    <priority>0.7</priority>
+    <changefreq>yearly</changefreq>
+    <lastmod>2026-06-16</lastmod>
   </url>
   <url>
-    <loc>https://datamage.art/privacy.html</loc>
-    <priority>0.4</priority>
+    <loc>https://datamage.art/privacy</loc>
+    <priority>0.3</priority>
+    <changefreq>yearly</changefreq>
+    <lastmod>2026-06-16</lastmod>
   </url>
 </urlset>
