@@ -1266,19 +1266,26 @@
       return textarea.value;
     }
 
+    const ALLOWED_EMBED_HOSTS = new Set(["www.youtube-nocookie.com", "player.vimeo.com"]);
+
     function normalizeEmbedSrc(src = "") {
       if (!src) return "";
-      const url = new URL(decodeHtml(src));
-      if (url.hostname.includes("youtube")) {
-        const start = url.searchParams.get("start");
-        url.search = "";
-        if (start) url.searchParams.set("start", start);
-        url.searchParams.set("rel", "0");
+      try {
+        const url = new URL(decodeHtml(src));
+        if (!ALLOWED_EMBED_HOSTS.has(url.hostname)) return "";
+        if (url.hostname.includes("youtube")) {
+          const start = url.searchParams.get("start");
+          url.search = "";
+          if (start) url.searchParams.set("start", start);
+          url.searchParams.set("rel", "0");
+        }
+        if (url.hostname.includes("vimeo")) {
+          url.searchParams.set("dnt", "1");
+        }
+        return url.toString();
+      } catch {
+        return "";
       }
-      if (url.hostname.includes("vimeo")) {
-        url.searchParams.set("dnt", "1");
-      }
-      return url.toString();
     }
 
     function embedVideoId(src = "") {
@@ -1433,16 +1440,21 @@
           overlay.appendChild(icon);
           button.appendChild(overlay);
           button.addEventListener("click", () => {
-            const iframe = document.createElement("iframe");
-            const src = new URL(media.src);
-            if (src.hostname.includes("youtube") && !src.searchParams.has("autoplay")) {
-              src.searchParams.set("autoplay", "1");
+            try {
+              const src = new URL(media.src);
+              if (!ALLOWED_EMBED_HOSTS.has(src.hostname)) return;
+              if (src.hostname.includes("youtube") && !src.searchParams.has("autoplay")) {
+                src.searchParams.set("autoplay", "1");
+              }
+              const iframe = document.createElement("iframe");
+              iframe.src = src.toString();
+              iframe.title = media.title || item.title;
+              iframe.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share";
+              iframe.allowFullscreen = true;
+              slot.replaceChildren(iframe);
+            } catch {
+              // invalid src — do nothing
             }
-            iframe.src = src.toString();
-            iframe.title = media.title || item.title;
-            iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-            iframe.allowFullscreen = true;
-            slot.replaceChildren(iframe);
           });
           slot.appendChild(button);
           frame.appendChild(slot);
