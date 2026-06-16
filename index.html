@@ -924,7 +924,10 @@
             <strong>Asset request:</strong> final reel clips, project stills, client logos, artist credits, installation photos, press quotes, and any show documentation that proves scale.
           </div>
         </div>
-        <form id="intake-form" class="signal-intake-panel grid gap-4 p-6 md:p-8" action="#" method="post" data-intake-endpoint="PASTE_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE">
+        <form id="intake-form" class="signal-intake-panel grid gap-4 p-6 md:p-8" action="#" method="post" data-intake-endpoint="https://api.web3forms.com/submit">
+          <input type="hidden" name="access_key" value="614e77f2-cbbe-4d38-991d-de81c6e842f8" />
+          <input type="hidden" name="subject" value="New inquiry — DataMage site" />
+          <input type="hidden" name="from_name" value="DataMage Intake" />
           <input type="hidden" name="segment" value="datamage-art-intake" />
           <label class="hidden" aria-hidden="true">Leave this field empty<input name="company_website" tabindex="-1" autocomplete="off" /></label>
           <div class="grid gap-4 sm:grid-cols-2">
@@ -1557,7 +1560,7 @@
     intakeForm?.addEventListener("submit", async (event) => {
       event.preventDefault();
       const endpoint = intakeForm.dataset.intakeEndpoint || "";
-      if (!endpoint || endpoint.includes("PASTE_GOOGLE_APPS_SCRIPT")) {
+      if (!endpoint) {
         if (intakeStatus) {
           intakeStatus.textContent = "Form not yet connected — email letscook@datamage.art directly.";
           intakeStatus.classList.add("is-error");
@@ -1580,14 +1583,18 @@
         intakeStatus.classList.remove("is-error");
       }
       try {
-        await fetch(endpoint, {
+        const response = await fetch(endpoint, {
           method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
           body: JSON.stringify(payload)
         });
-        intakeForm.reset();
-        if (intakeStatus) intakeStatus.textContent = "Transmission received. We will follow up soon.";
+        const data = await response.json();
+        if (data.success) {
+          intakeForm.reset();
+          if (intakeStatus) intakeStatus.textContent = "Transmission received. We will follow up soon.";
+        } else {
+          throw new Error(data.message || "Submission failed");
+        }
       } catch (error) {
         console.warn(error);
         if (intakeStatus) {
