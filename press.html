@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Press &amp; Coverage | :DATA/MAGE</title>
+  <meta name="description" content="Interviews, reviews, features, and documentary coverage of DATA/MAGE — concert visuals, projection design, and live visual systems." />
+  <link rel="canonical" href="https://datamage.art/press" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://datamage.art/press" />
+  <meta property="og:title" content="Press &amp; Coverage | :DATA/MAGE" />
+  <meta property="og:description" content="Interviews, reviews, features, and documentary coverage of DATA/MAGE — concert visuals, projection design, and live visual systems." />
+  <meta property="og:image" content="https://datamage.art/assets/artstation/live-visual-mixes.jpg" />
+  <meta property="og:site_name" content="DATA/MAGE" />
+  <link rel="icon" type="image/png" href="assets/logos/DM_Android_logo.png" />
+  <link rel="stylesheet" href="/assets/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root { color-scheme: dark; }
+    :root { --hero-accent: #ff1bd6; --hero-secondary: #00eaff; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body {
+      background:
+        linear-gradient(90deg, rgba(255, 27, 214, .07) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(0, 234, 255, .05) 1px, transparent 1px),
+        radial-gradient(circle at 16% 11%, rgba(0, 234, 255, .20), transparent 28rem),
+        radial-gradient(circle at 82% 0%, rgba(255, 27, 214, .18), transparent 27rem),
+        linear-gradient(180deg, #020203 0%, #07000d 44%, #030306 100%);
+      background-size: 80px 80px, 80px 80px, auto, auto, auto;
+      color: #f7f0df;
+      overflow-x: hidden;
+    }
+    .scanlines::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 60;
+      background: repeating-linear-gradient(180deg, rgba(255,255,255,.04) 0 1px, transparent 1px 4px);
+      mix-blend-mode: overlay;
+      opacity: .24;
+    }
+    .glitch { text-shadow: 2px 0 #ff2bd6, -2px 0 #12f7ff; }
+    .neon-panel { box-shadow: 0 0 0 1px rgba(0, 234, 255, .24), 0 0 32px rgba(255, 27, 214, .13); }
+    .cyber-card { clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px)); }
+    .starfield { position: fixed; inset: 0; z-index: 18; pointer-events: none; opacity: .86; }
+    .cursor-glow {
+      position: fixed; left: 0; top: 0; width: 420px; height: 420px; z-index: 2;
+      pointer-events: none; border-radius: 50%;
+      background: radial-gradient(circle, color-mix(in srgb, var(--hero-accent) 18%, transparent), transparent 64%);
+      transform: translate3d(-50%, -50%, 0); opacity: .65; mix-blend-mode: screen; transition: opacity .2s ease;
+    }
+    .proof-trigger {
+      position: relative; z-index: 24; display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(0, 234, 255, .56); color: rgb(0, 234, 255); background: rgba(0, 234, 255, .05);
+      padding: .65rem 1rem; font-size: .75rem; text-transform: uppercase;
+      transition: background .18s ease, color .18s ease, border-color .18s ease, box-shadow .18s ease;
+      text-decoration: none;
+    }
+    .proof-trigger:hover, .proof-trigger:focus-visible {
+      background: rgb(0, 234, 255); border-color: rgb(0, 234, 255); color: rgb(2, 2, 3);
+      box-shadow: 0 0 22px rgba(0, 234, 255, .24); outline: none;
+    }
+    .proof-trigger.magenta { border-color: rgba(255, 27, 214, .56); color: rgb(255, 27, 214); background: rgba(255, 27, 214, .05); }
+    .proof-trigger.magenta:hover, .proof-trigger.magenta:focus-visible {
+      background: rgb(255, 27, 214); border-color: rgb(255, 27, 214); color: rgb(2, 2, 3);
+      box-shadow: 0 0 22px rgba(255, 27, 214, .24);
+    }
+    .proof-trigger.phosphor { border-color: rgba(214, 255, 47, .56); color: rgb(214, 255, 47); background: rgba(214, 255, 47, .05); }
+    .proof-trigger.phosphor:hover, .proof-trigger.phosphor:focus-visible {
+      background: rgb(214, 255, 47); border-color: rgb(214, 255, 47); color: rgb(2, 2, 3);
+      box-shadow: 0 0 22px rgba(214, 255, 47, .2);
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body class="scanlines font-mono antialiased">
+  <canvas id="stars" class="starfield"></canvas>
+  <div id="cursor-glow" class="cursor-glow"></div>
+
+  <header class="fixed inset-x-0 top-0 z-30 bg-gradient-to-b from-void/80 to-transparent">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between px-5 py-5">
+      <a href="index.html#press" class="text-xs font-semibold uppercase text-signal/55 transition hover:text-cyan">← Back</a>
+      <a href="index.html" class="font-display text-xl font-bold tracking-normal text-signal">:DATA/<span class="text-cyan">MAGE</span></a>
+      <a href="index.html#intake" class="border border-magenta/70 px-4 py-2 text-xs uppercase text-magenta transition hover:bg-magenta hover:text-void">Contact</a>
+    </nav>
+  </header>
+
+  <main class="relative z-10 pt-28">
+
+    <!-- Page header -->
+    <section class="mx-auto max-w-7xl px-5 pb-16">
+      <p class="text-xs uppercase text-phosphor">Press archive</p>
+      <h1 class="glitch font-display text-5xl font-bold leading-none text-signal md:text-7xl">On the record.</h1>
+      <p class="mt-6 max-w-2xl text-sm leading-7 text-signal/68">Interviews, reviews, features, and documentary coverage of DATA/MAGE and the work.</p>
+    </section>
+
+    <!-- Featured: EDM Texas (newest) -->
+    <section class="border-y border-white/10 bg-white/[.035]">
+      <div class="mx-auto max-w-7xl px-5 py-16">
+        <p class="mb-8 text-xs uppercase text-cyan">Latest coverage</p>
+        <article class="cyber-card neon-panel bg-white/[.035] max-w-3xl">
+          <div class="p-8 md:p-10">
+            <div class="flex items-center justify-between gap-3">
+              <p class="text-xs uppercase text-cyan font-mono">EDM Texas</p>
+              <span class="text-xs text-signal/40 font-mono">Jun 2026</span>
+            </div>
+            <p class="mt-5 text-xs uppercase text-cyan">Review</p>
+            <h2 class="mt-2 font-display text-3xl font-bold text-signal leading-tight md:text-4xl">ILLFest 2026: A Colorful World Of Its Own</h2>
+            <p class="mt-5 text-sm leading-7 text-signal/68">The Renegade Gallery earns a callout in EDM Texas's full ILLFest 2026 review — the DataMage installation noted for turning the space into an interactive lounge where projection art and community collided throughout the weekend.</p>
+            <a href="https://www.edmtx.org/post/illfest-2026-review" target="_blank" rel="noreferrer" class="proof-trigger mt-7 inline-flex">Read review</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Archive -->
+    <section class="mx-auto max-w-7xl px-5 py-20">
+      <p class="mb-10 text-xs uppercase text-signal/40">Archive</p>
+      <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+
+        <!-- Beyond the Bass -->
+        <article class="cyber-card neon-panel bg-white/[.035] flex flex-col">
+          <div class="p-6 flex flex-col flex-1">
+            <div class="flex items-center justify-between gap-3">
+              <p class="text-xs uppercase text-magenta font-mono">Beyond the Bass</p>
+              <span class="text-xs text-signal/40 font-mono">Jun 2026</span>
+            </div>
+            <p class="mt-4 text-xs uppercase text-magenta">Interview</p>
+            <h3 class="mt-2 font-display text-xl text-signal leading-tight">Illfest 2026: Inside the Activation</h3>
+            <p class="mt-3 text-sm leading-6 text-signal/62 flex-1">An in-depth interview with DATA/MAGE covering the Illfest Austin activation — the live visual systems, the production process, and what it takes to build a full-scale festival experience from the ground up.</p>
+            <a href="https://beyondthebass.substack.com/p/0e73cc82-8b53-4568-96e8-e3681e61c022" target="_blank" rel="noreferrer" class="proof-trigger magenta mt-5 self-start">Read interview</a>
+          </div>
+        </article>
+
+        <!-- Soundhaven -->
+        <article class="cyber-card border border-white/12 bg-white/[.03] flex flex-col">
+          <div class="p-6 flex flex-col flex-1">
+            <div class="flex items-center justify-between gap-3">
+              <p class="text-xs uppercase text-cyan font-mono">Soundhaven</p>
+              <span class="text-xs text-signal/40 font-mono">May 2021</span>
+            </div>
+            <p class="mt-4 text-xs uppercase text-cyan">Profile</p>
+            <h3 class="mt-2 font-display text-xl text-signal leading-tight">It Is Mathematically Impossible to Replicate Kilian Holt, the Photon Samurai.</h3>
+            <p class="mt-3 text-sm leading-6 text-signal/62 flex-1">A full profile covering the career path from White Oak Music Hall through international touring with Cashmere Cat and Jauz, festival-scale production at Electric Zoo and Day for Night, and the philosophy behind the work.</p>
+            <a href="https://www.soundhavenofficial.com/post/fact-it-is-mathematically-impossible-to-replicate-kilian-holt-the-photon-samurai" target="_blank" rel="noreferrer" class="proof-trigger mt-5 self-start">Read profile</a>
+          </div>
+        </article>
+
+        <!-- Cure to Loneliness -->
+        <article class="cyber-card border border-phosphor/30 bg-phosphor/[.04] flex flex-col">
+          <div class="p-6 flex flex-col flex-1">
+            <div class="flex items-center justify-between gap-3">
+              <p class="text-xs uppercase text-phosphor font-mono">Documentary series</p>
+              <span class="text-xs text-signal/40 font-mono">Video</span>
+            </div>
+            <p class="mt-4 text-xs uppercase text-phosphor">Featured in</p>
+            <h3 class="mt-2 font-display text-xl text-signal leading-tight">Cure to Loneliness BTS</h3>
+            <p class="mt-3 text-sm leading-6 text-signal/62 flex-1">DATA/MAGE featured across a multi-part behind-the-scenes documentary series. Full playlist on YouTube.</p>
+            <a href="https://www.youtube.com/playlist?list=PLIfOzrXJqPe3DZcdJjhjEcvh-L-Vrp0T-" target="_blank" rel="noreferrer" class="proof-trigger phosphor mt-5 self-start">Watch series</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- CTA footer strip -->
+    <section class="border-t border-white/10 bg-white/[.025] px-5 py-14">
+      <div class="mx-auto flex max-w-7xl flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p class="text-xs uppercase text-signal/50">More</p>
+          <p class="mt-2 font-display text-2xl text-signal">See the work behind the coverage</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href="index.html#work" class="proof-trigger">Portfolio</a>
+          <a href="index.html#installs" class="proof-trigger magenta">Installs</a>
+          <a href="index.html#intake" class="proof-trigger phosphor">Start a project</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="relative z-10 border-t border-white/10 px-5 py-8 text-xs text-signal/55">
+    <div class="mx-auto flex max-w-7xl flex-col justify-between gap-3 sm:flex-row">
+      <p>:DATA/MAGE - creative visual systems</p>
+      <p>Concerts / festivals / museums / immersive venues</p>
+    </div>
+  </footer>
+
+  <script>
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    const cursorGlow = document.getElementById("cursor-glow");
+    let stars = [];
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    function initStars() {
+      stars = [];
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const count = Math.floor((canvas.width * canvas.height) / 5800);
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.1 + 0.2,
+          o: Math.random() * 0.6 + 0.2,
+          speed: Math.random() * 0.012 + 0.004
+        });
+      }
+    }
+
+    function drawStars(t) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(s => {
+        s.o = 0.22 + Math.abs(Math.sin(t * s.speed + s.x)) * 0.62;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(244,247,255,${s.o.toFixed(2)})`;
+        ctx.fill();
+      });
+    }
+
+    function loop(t = 0) {
+      if (!reducedMotion.matches) drawStars(t / 1000);
+      requestAnimationFrame(loop);
+    }
+
+    document.addEventListener("mousemove", e => {
+      cursorGlow.style.transform = `translate3d(${e.clientX}px,${e.clientY}px,0) translate(-50%,-50%)`;
+    });
+
+    window.addEventListener("resize", initStars);
+    initStars();
+    loop();
+  </script>
+</body>
+</html>

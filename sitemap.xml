@@ -19,6 +19,12 @@
     <lastmod>2026-06-16</lastmod>
   </url>
   <url>
+    <loc>https://datamage.art/press</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-06-16</lastmod>
+  </url>
+  <url>
     <loc>https://datamage.art/privacy</loc>
     <priority>0.3</priority>
     <changefreq>yearly</changefreq>
