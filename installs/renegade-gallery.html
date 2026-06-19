@@ -81,7 +81,7 @@
     }
     .gallery-item:focus-visible { outline: 2px solid rgba(0, 234, 255, .7); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-    #dm-modal-close:hover { background: rgb(255,27,214) !important; color: rgb(2,2,3) !important; box-shadow: 0 0 16px rgba(255,27,214,.4); }
+    #dm-modal-close:hover { color: rgb(244,247,255) !important; }
   </style>
 </head>
 <body class="scanlines font-mono antialiased">
@@ -275,14 +275,9 @@
   </main>
 
   <!-- Lightbox modal -->
-  <div id="dm-modal" style="display:none; position:fixed; inset:0; z-index:9999; align-items:center; justify-content:center; background:rgba(0,0,0,.82); backdrop-filter:blur(4px);" role="dialog" aria-modal="true" aria-label="Media viewer">
-    <div style="position:relative; width:64vw; min-width:380px; background:#050507; clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px)); box-shadow:0 0 0 1px rgba(0,234,255,.28),0 0 56px rgba(255,27,214,.22),0 0 120px rgba(0,0,0,.9);">
-      <div style="display:flex; align-items:center; justify-content:space-between; padding:0.55rem 1.25rem; border-bottom:1px solid rgba(0,234,255,.18);">
-        <span style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; color:rgba(0,234,255,.65);">:DATA/MAGE // GALLERY</span>
-        <button id="dm-modal-close" style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase; color:rgb(255,27,214); background:rgba(255,27,214,.07); border:1px solid rgba(255,27,214,.45); padding:0.22rem 0.7rem; cursor:pointer; transition:background .15s,color .15s,box-shadow .15s;" aria-label="Close">[ close ]</button>
-      </div>
-      <div id="dm-modal-content" style="position:relative; width:100%; aspect-ratio:16/9;"></div>
-    </div>
+  <div id="dm-modal" style="display:none; position:fixed; inset:0; z-index:9999; align-items:center; justify-content:center; background:rgba(0,0,0,.86);" role="dialog" aria-modal="true" aria-label="Media viewer">
+    <button id="dm-modal-close" style="position:absolute; top:1rem; right:1.25rem; font-size:2rem; line-height:1; color:rgba(244,247,255,.45); background:none; border:none; cursor:pointer; padding:0.25rem 0.5rem; transition:color .15s;" aria-label="Close">&times;</button>
+    <div id="dm-modal-content" style="position:relative; width:90vw; max-width:1280px; aspect-ratio:16/9;"></div>
   </div>
 
   <footer class="relative z-10 border-t border-white/10 px-5 py-8 text-xs text-signal/55">
