@@ -301,6 +301,26 @@
     initStars();
     loop();
 
+    // Pause all other Drive iframes when one is interacted with
+    (function () {
+      var iframes = Array.from(document.querySelectorAll('iframe[src*="drive.google.com"]'));
+      var srcs = new Map(iframes.map(function (f) { return [f, f.src]; }));
+
+      window.addEventListener('blur', function () {
+        if (document.activeElement && document.activeElement.tagName === 'IFRAME') {
+          var active = document.activeElement;
+          iframes.forEach(function (iframe) {
+            if (iframe !== active) {
+              var src = srcs.get(iframe);
+              iframe.src = '';
+              setTimeout(function () { iframe.src = src; }, 50);
+            }
+          });
+          window.focus();
+        }
+      });
+    })();
+
   </script>
 </body>
 </html>
