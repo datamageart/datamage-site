@@ -143,54 +143,80 @@
     <section class="mx-auto max-w-7xl px-5 py-20">
       <p class="mb-6 text-xs uppercase text-cyan">Gallery / documentation</p>
 
-      <!-- Hero video -->
-      <div class="relative w-full mb-4 overflow-hidden bg-void border border-white/10" style="aspect-ratio:16/9">
-        <iframe src="https://drive.google.com/file/d/1Iy8peETPlMg3oDHwx4tQCMQcA1Q0dAsr/preview"
-          class="absolute inset-0 w-full h-full" allow="autoplay" allowfullscreen loading="lazy"
-          title="Renegade Gallery — Illfest Austin 2026 main footage"></iframe>
-      </div>
+      <!-- Hero video thumbnail -->
+      <button class="dm-thumb relative w-full mb-4 overflow-hidden bg-void border border-white/10 cursor-pointer group block"
+              style="aspect-ratio:16/9" data-type="video" data-id="1Iy8peETPlMg3oDHwx4tQCMQcA1Q0dAsr"
+              aria-label="Play video">
+        <img src="https://drive.google.com/thumbnail?id=1Iy8peETPlMg3oDHwx4tQCMQcA1Q0dAsr&sz=w1280"
+             class="absolute inset-0 w-full h-full object-cover" loading="lazy" alt="Renegade Gallery main footage" />
+        <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/50 transition-colors duration-200">
+          <svg width="72" height="72" viewBox="0 0 64 64" fill="none" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="rgba(0,0,0,.55)"/><polygon points="26,18 50,32 26,46" fill="white" opacity=".92"/></svg>
+        </div>
+      </button>
 
       <!-- Media grid -->
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 
-        <div class="relative overflow-hidden bg-void border border-white/10" style="aspect-ratio:16/9">
-          <iframe src="https://drive.google.com/file/d/1rEQSqLFBAPR7r6RByNRLZcl8R-x1ALY6/preview"
-            class="absolute inset-0 w-full h-full" allow="autoplay" loading="lazy"
-            title="Renegade Gallery footage"></iframe>
-        </div>
+        <button class="dm-thumb relative overflow-hidden bg-void border border-white/10 cursor-pointer group block"
+                style="aspect-ratio:16/9" data-type="video" data-id="1rEQSqLFBAPR7r6RByNRLZcl8R-x1ALY6"
+                aria-label="Play video">
+          <img src="https://drive.google.com/thumbnail?id=1rEQSqLFBAPR7r6RByNRLZcl8R-x1ALY6&sz=w640"
+               class="absolute inset-0 w-full h-full object-cover" loading="lazy" alt="Renegade Gallery footage" />
+          <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/50 transition-colors duration-200">
+            <svg width="48" height="48" viewBox="0 0 64 64" fill="none" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="rgba(0,0,0,.55)"/><polygon points="26,18 50,32 26,46" fill="white" opacity=".92"/></svg>
+          </div>
+        </button>
 
-        <div class="relative overflow-hidden bg-void border border-white/10" style="aspect-ratio:16/9">
-          <iframe src="https://drive.google.com/file/d/1gdDR9CzzhmedxQDfeFlPfP2GxXtjltrc/preview"
-            class="absolute inset-0 w-full h-full" allow="autoplay" loading="lazy"
-            title="Renegade Gallery footage"></iframe>
-        </div>
+        <button class="dm-thumb relative overflow-hidden bg-void border border-white/10 cursor-pointer group block"
+                style="aspect-ratio:16/9" data-type="video" data-id="1gdDR9CzzhmedxQDfeFlPfP2GxXtjltrc"
+                aria-label="Play video">
+          <img src="https://drive.google.com/thumbnail?id=1gdDR9CzzhmedxQDfeFlPfP2GxXtjltrc&sz=w640"
+               class="absolute inset-0 w-full h-full object-cover" loading="lazy" alt="Renegade Gallery footage" />
+          <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/50 transition-colors duration-200">
+            <svg width="48" height="48" viewBox="0 0 64 64" fill="none" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="rgba(0,0,0,.55)"/><polygon points="26,18 50,32 26,46" fill="white" opacity=".92"/></svg>
+          </div>
+        </button>
 
-        <div class="overflow-hidden bg-void border border-white/10" style="aspect-ratio:16/9">
+        <button class="dm-thumb relative overflow-hidden bg-void border border-white/10 cursor-pointer group block"
+                style="aspect-ratio:16/9" data-type="image" data-src="https://lh3.googleusercontent.com/d/1KVawpjwTxCdpghSOxlD73Tplqw0rpMcW"
+                aria-label="View photo">
           <img src="https://lh3.googleusercontent.com/d/1KVawpjwTxCdpghSOxlD73Tplqw0rpMcW"
-            class="w-full h-full object-cover" alt="Renegade Gallery at Illfest Austin 2026" loading="lazy" />
-        </div>
+               class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" alt="Renegade Gallery at Illfest Austin 2026" />
+        </button>
 
-        <div class="relative overflow-hidden bg-void border border-white/10" style="aspect-ratio:16/9">
-          <iframe src="https://drive.google.com/file/d/1REhRnYsCRy1KlIKGfWSf3nDdYBOv57il/preview"
-            class="absolute inset-0 w-full h-full" allow="autoplay" loading="lazy"
-            title="Renegade Gallery footage"></iframe>
-        </div>
+        <button class="dm-thumb relative overflow-hidden bg-void border border-white/10 cursor-pointer group block"
+                style="aspect-ratio:16/9" data-type="video" data-id="1REhRnYsCRy1KlIKGfWSf3nDdYBOv57il"
+                aria-label="Play video">
+          <img src="https://drive.google.com/thumbnail?id=1REhRnYsCRy1KlIKGfWSf3nDdYBOv57il&sz=w640"
+               class="absolute inset-0 w-full h-full object-cover" loading="lazy" alt="Renegade Gallery footage" />
+          <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/50 transition-colors duration-200">
+            <svg width="48" height="48" viewBox="0 0 64 64" fill="none" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="rgba(0,0,0,.55)"/><polygon points="26,18 50,32 26,46" fill="white" opacity=".92"/></svg>
+          </div>
+        </button>
 
-        <div class="overflow-hidden bg-void border border-white/10" style="aspect-ratio:16/9">
+        <button class="dm-thumb relative overflow-hidden bg-void border border-white/10 cursor-pointer group block"
+                style="aspect-ratio:16/9" data-type="image" data-src="https://lh3.googleusercontent.com/d/1S716rKeVzQvI2ztxDsfXKs-WPcLGvLde"
+                aria-label="View photo">
           <img src="https://lh3.googleusercontent.com/d/1S716rKeVzQvI2ztxDsfXKs-WPcLGvLde"
-            class="w-full h-full object-cover" alt="Renegade Gallery at Illfest Austin 2026" loading="lazy" />
-        </div>
+               class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" alt="Renegade Gallery at Illfest Austin 2026" />
+        </button>
 
-        <div class="relative overflow-hidden bg-void border border-white/10" style="aspect-ratio:16/9">
-          <iframe src="https://drive.google.com/file/d/1SPn5bqGlmfzS_BCaDCeHEGZANhDWvQSz/preview"
-            class="absolute inset-0 w-full h-full" allow="autoplay" loading="lazy"
-            title="Renegade Gallery footage"></iframe>
-        </div>
+        <button class="dm-thumb relative overflow-hidden bg-void border border-white/10 cursor-pointer group block"
+                style="aspect-ratio:16/9" data-type="video" data-id="1SPn5bqGlmfzS_BCaDCeHEGZANhDWvQSz"
+                aria-label="Play video">
+          <img src="https://drive.google.com/thumbnail?id=1SPn5bqGlmfzS_BCaDCeHEGZANhDWvQSz&sz=w640"
+               class="absolute inset-0 w-full h-full object-cover" loading="lazy" alt="Renegade Gallery footage" />
+          <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/50 transition-colors duration-200">
+            <svg width="48" height="48" viewBox="0 0 64 64" fill="none" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="rgba(0,0,0,.55)"/><polygon points="26,18 50,32 26,46" fill="white" opacity=".92"/></svg>
+          </div>
+        </button>
 
-        <div class="overflow-hidden bg-void border border-white/10 sm:col-span-2 lg:col-span-3" style="aspect-ratio:16/9">
+        <button class="dm-thumb relative overflow-hidden bg-void border border-white/10 cursor-pointer group block sm:col-span-2 lg:col-span-3"
+                style="aspect-ratio:16/9" data-type="image" data-src="https://lh3.googleusercontent.com/d/1CBvRZR2kjTOJEPeVdHTkNEs2dYxw6f8k"
+                aria-label="View photo">
           <img src="https://lh3.googleusercontent.com/d/1CBvRZR2kjTOJEPeVdHTkNEs2dYxw6f8k"
-            class="w-full h-full object-cover" alt="Renegade Gallery at Illfest Austin 2026" loading="lazy" />
-        </div>
+               class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" alt="Renegade Gallery at Illfest Austin 2026" />
+        </button>
 
       </div>
     </section>
@@ -247,6 +273,12 @@
 
   </main>
 
+  <!-- Lightbox modal -->
+  <div id="dm-modal" style="display:none" class="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Media viewer">
+    <button id="dm-modal-close" class="absolute top-4 right-5 text-signal/70 hover:text-signal text-3xl leading-none font-mono z-10" aria-label="Close">&times;</button>
+    <div id="dm-modal-content" class="relative w-full max-w-5xl mx-4" style="aspect-ratio:16/9"></div>
+  </div>
+
   <footer class="relative z-10 border-t border-white/10 px-5 py-8 text-xs text-signal/55">
     <div class="mx-auto flex max-w-7xl flex-col justify-between gap-3 sm:flex-row">
       <p>:DATA/MAGE - creative visual systems</p>
@@ -301,24 +333,51 @@
     initStars();
     loop();
 
-    // Pause all other Drive iframes when one is interacted with
+    // Thumbnail lightbox — opens Drive videos / photos in a modal; clicking outside or ESC closes
     (function () {
-      var iframes = Array.from(document.querySelectorAll('iframe[src*="drive.google.com"]'));
-      var srcs = new Map(iframes.map(function (f) { return [f, f.src]; }));
+      var modal = document.getElementById('dm-modal');
+      var content = document.getElementById('dm-modal-content');
+      var closeBtn = document.getElementById('dm-modal-close');
 
-      window.addEventListener('blur', function () {
-        if (document.activeElement && document.activeElement.tagName === 'IFRAME') {
-          var active = document.activeElement;
-          iframes.forEach(function (iframe) {
-            if (iframe !== active) {
-              var src = srcs.get(iframe);
-              iframe.src = '';
-              setTimeout(function () { iframe.src = src; }, 50);
-            }
-          });
-          window.focus();
+      function openModal(type, value) {
+        content.innerHTML = '';
+        var el;
+        if (type === 'video') {
+          el = document.createElement('iframe');
+          el.src = 'https://drive.google.com/file/d/' + value + '/preview';
+          el.className = 'absolute inset-0 w-full h-full';
+          el.setAttribute('allow', 'autoplay');
+          el.allowFullscreen = true;
+          el.title = 'Renegade Gallery video';
+          content.style.aspectRatio = '16/9';
+        } else {
+          content.style.aspectRatio = '';
+          el = document.createElement('img');
+          el.src = value;
+          el.alt = 'Renegade Gallery photo';
+          el.style.cssText = 'max-width:90vw;max-height:85vh;object-fit:contain;display:block;margin:auto;';
         }
+        content.appendChild(el);
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        closeBtn.focus();
+      }
+
+      function closeModal() {
+        content.innerHTML = '';
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+
+      document.querySelectorAll('.dm-thumb').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          openModal(btn.dataset.type, btn.dataset.type === 'video' ? btn.dataset.id : btn.dataset.src);
+        });
       });
+
+      closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
     })();
 
   </script>
