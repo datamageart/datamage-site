@@ -144,7 +144,18 @@
     <section class="mx-auto max-w-7xl px-5 py-20">
       <p class="mb-6 text-xs uppercase text-cyan">Gallery / documentation</p>
 
-      <!-- Hero video thumbnail -->
+      <!-- YouTube highlight — primary feature -->
+      <button class="dm-thumb relative w-full mb-4 overflow-hidden bg-void border border-white/10 cursor-pointer group block"
+              style="aspect-ratio:16/9" data-type="youtube" data-id="DIXw05sJBEA"
+              aria-label="Play Renegade Gallery highlight video">
+        <img src="https://img.youtube.com/vi/DIXw05sJBEA/maxresdefault.jpg"
+             class="absolute inset-0 w-full h-full object-cover" loading="eager" alt="Renegade Gallery at Illfest Austin 2026 — highlight video" />
+        <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/50 transition-colors duration-200">
+          <svg width="72" height="72" viewBox="0 0 64 64" fill="none" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="rgba(0,0,0,.55)"/><polygon points="26,18 50,32 26,46" fill="white" opacity=".92"/></svg>
+        </div>
+      </button>
+
+      <!-- Drive footage -->
       <button class="dm-thumb relative w-full mb-4 overflow-hidden bg-void border border-white/10 cursor-pointer group block"
               style="aspect-ratio:16/9" data-type="video" data-id="1Iy8peETPlMg3oDHwx4tQCMQcA1Q0dAsr"
               aria-label="Play video">
@@ -343,7 +354,15 @@
       function openModal(type, value) {
         content.innerHTML = '';
         var el;
-        if (type === 'video') {
+        if (type === 'youtube') {
+          el = document.createElement('iframe');
+          el.src = 'https://www.youtube-nocookie.com/embed/' + value + '?rel=0&autoplay=1';
+          el.className = 'absolute inset-0 w-full h-full';
+          el.setAttribute('allow', 'autoplay; fullscreen');
+          el.allowFullscreen = true;
+          el.title = 'Renegade Gallery video';
+          content.style.aspectRatio = '16/9';
+        } else if (type === 'video') {
           el = document.createElement('iframe');
           el.src = 'https://drive.google.com/file/d/' + value + '/preview';
           el.className = 'absolute inset-0 w-full h-full';
@@ -372,7 +391,7 @@
 
       document.querySelectorAll('.dm-thumb').forEach(function (btn) {
         btn.addEventListener('click', function () {
-          openModal(btn.dataset.type, btn.dataset.type === 'video' ? btn.dataset.id : btn.dataset.src);
+          openModal(btn.dataset.type, btn.dataset.type === 'image' ? btn.dataset.src : btn.dataset.id);
         });
       });
 
